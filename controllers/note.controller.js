@@ -96,3 +96,17 @@ exports.findAll = (request, response) =>
         else response.send(data);
     })
 }
+
+exports.findAllCompleted = (request, response) =>
+{
+    Note.findAllCompleted((err, data) =>
+    {
+        if (err)
+        {
+            response.status(500).send({
+                message: err.message || "Some error occurred during retrieving completed notes!",
+            });
+        }
+        else response.send(data);
+    })
+}

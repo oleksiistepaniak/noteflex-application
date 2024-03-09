@@ -44,4 +44,22 @@ Note.findAll = (title, result) =>
     })
 }
 
+Note.findAllCompleted = result =>
+{
+    let query = "SELECT * FROM notes WHERE isCompleted = TRUE";
+
+    sql.query(query, (error, response) =>
+    {
+        if (error)
+        {
+            console.log(error);
+            result(error, null);
+            return;
+        }
+
+        console.log("completed notes: ", response);
+        result(null, response);
+    })
+}
+
 module.exports = Note;

@@ -4,6 +4,5 @@ module.exports = app => {
 
     router.post("/", notes.create);
 
-
     app.use("/api/notes", router);
 }

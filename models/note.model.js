@@ -23,4 +23,25 @@ Note.create = (newNote, result) =>
     });
 };
 
+Note.findAll = (title, result) =>
+{
+    let query = "SELECT * FROM notes";
+
+    if (title)
+        query += ` WHERE title LIKE '%${title}%'`;
+
+    sql.query(query, (error, response) =>
+    {
+        if (error)
+        {
+            console.log(error);
+            result(error, null);
+            return;
+        }
+
+        console.log("notes: ", response);
+        result(null, response);
+    })
+}
+
 module.exports = Note;

@@ -80,3 +80,19 @@ exports.create = (request, response) =>
         } else response.send(data);
     });
 }
+
+exports.findAll = (request, response) =>
+{
+    const title = request.query.title;
+
+    Note.findAll(title, (err, data) =>
+    {
+        if (err)
+        {
+            response.status(500).send({
+                message: err.message || "Some error occurred during retrieving notes!",
+            });
+        }
+        else response.send(data);
+    })
+}

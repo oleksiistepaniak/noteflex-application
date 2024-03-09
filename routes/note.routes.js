@@ -3,6 +3,7 @@ module.exports = app => {
     const router = require("express").Router();
 
     router.post("/", notes.create);
+    router.get("/", notes.findAll);
 
     app.use("/api/notes", router);
 }

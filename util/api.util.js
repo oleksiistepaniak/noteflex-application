@@ -1,4 +1,5 @@
 const messages = require("../util/api.messages");
+const constants = require("../constants");
 
 function isString(input)
 {
@@ -8,6 +9,24 @@ function isString(input)
     }
 }
 
+function isTitleValid(input)
+{
+    if (input.length === 0 || input.length > constants.MAX_TITLE_LENGTH)
+    {
+        throw Error(messages.apiFunctionMessages.NOTE_CREATING.INVALID_TITLE(input));
+    }
+}
+
+function isDescriptionValid(input)
+{
+    if (input.length < constants.MIN_DESCRIPTION_LENGTH || input.length > constants.MAX_DESCRIPTION_LENGTH)
+    {
+        throw Error(messages.apiFunctionMessages.NOTE_CREATING.INVALID_DESCRIPTION(input));
+    }
+}
+
 module.exports = {
-    isString: isString,
+    isString,
+    isTitleValid,
+    isDescriptionValid
 }

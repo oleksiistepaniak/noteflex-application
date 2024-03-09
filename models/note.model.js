@@ -62,4 +62,22 @@ Note.findAllCompleted = result =>
     })
 }
 
+Note.findAllActive = result =>
+{
+    let query = "SELECT * FROM notes WHERE isCompleted = FALSE";
+
+    sql.query(query, (error, response) =>
+    {
+        if (error)
+        {
+            console.error(error);
+            result(error, null);
+            return;
+        }
+
+        console.log("active notes: ", response);
+        result(null, response);
+    })
+}
+
 module.exports = Note;

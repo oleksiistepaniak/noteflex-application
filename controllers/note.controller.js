@@ -110,3 +110,17 @@ exports.findAllCompleted = (request, response) =>
         else response.send(data);
     })
 }
+
+exports.findAllActive = (request, response) =>
+{
+    Note.findAllActive((err, data) =>
+    {
+        if (err)
+        {
+            response.status(500).send({
+                message: err.message || "Some error occurred during retrieving active notes!",
+            });
+        }
+        else response.send(data);
+    })
+}

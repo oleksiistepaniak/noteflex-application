@@ -98,4 +98,27 @@ Note.findAllActive = result =>
     })
 }
 
+Note.updateById = (id, note, result) =>
+{
+    const query = "UPDATE notes SET title = ?, description = ?, isCompleted = ? WHERE id = ?";
+
+    sql.query(query, [note.title, note.description, note.isCompleted, id], (error, response) => {
+        if (error)
+        {
+            console.error(error);
+            result(error, null);
+            return;
+        }
+
+        if (response.affectedRows === 0)
+        {
+            result({kind: "not_found"}, null);
+            return;
+        }
+
+        console.log("updated note: ", {id: id, ...note});
+        result(null, {id: id, ...note});
+    })
+}
+
 module.exports = Note;

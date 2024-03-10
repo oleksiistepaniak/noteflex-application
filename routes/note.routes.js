@@ -7,6 +7,7 @@ module.exports = app => {
     router.get("/completed", notes.findAllCompleted);
     router.get("/active", notes.findAllActive);
     router.get("/:id", notes.findOneById);
+    router.put("/:id", notes.updateById);
 
     app.use("/api/notes", router);
 }

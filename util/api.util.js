@@ -11,7 +11,9 @@ function isString(input)
 
 function isNumber(input)
 {
-    if (typeof input !== "number")
+    const number = parseInt(input);
+
+    if (isNaN(number))
     {
         throw Error(messages.apiFunctionMessages.VALUE_IS_NOT_NUMBER(input));
     }

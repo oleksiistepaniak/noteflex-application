@@ -248,5 +248,36 @@ exports.updateById = (request, response) =>
             }
         } else response.send(data);
     })
+}
 
+exports.makeCompleted = (request, response) =>
+{
+    const id = request.params.id;
+
+    // VALIDATING IDENTIFIER - IS NUMBER
+    try {
+        util.isNumber(id);
+    } catch (error)
+    {
+        response.status(400).send({
+            message: error.message,
+        });
+        return;
+    }
+
+    Note.makeCompleted(id, (err, data) =>
+    {
+        if (err) {
+            if (err.kind === "not_found")
+            {
+                response.status(400).send({
+                    message: `Not found Note with id ${id}`,
+                })
+            } else {
+                response.status(500).send({
+                    message: `Some error occurred while making completed Note by id ${id}`,
+                });
+            }
+        } else response.send(data);
+    })
 }

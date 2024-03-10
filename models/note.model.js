@@ -121,4 +121,28 @@ Note.updateById = (id, note, result) =>
     })
 }
 
+Note.makeCompleted = (id, result) =>
+{
+    const query = `UPDATE notes SET isCompleted = TRUE WHERE id = ${id}`;
+
+    sql.query(query, (error, response) =>
+    {
+        if (error)
+        {
+            console.error(error);
+            result(error, null);
+            return;
+        }
+
+        if (response.affectedRows === 0)
+        {
+            result({kind: "not_found"}, null);
+            return;
+        }
+
+        console.log(`completed note by id: ${id}. data: ${response}`);
+        result(null, {id: id, ...response});
+    })
+}
+
 module.exports = Note;

@@ -44,6 +44,24 @@ Note.findAll = (title, result) =>
     })
 }
 
+Note.findOneById = (id, result) =>
+{
+    const query = `SELECT * FROM notes WHERE id = ${id}`;
+
+    sql.query(query, (error, response) =>
+    {
+        if (error)
+        {
+            console.log(error);
+            result(error, null);
+            return;
+        }
+
+        console.log(`note by id: ${id} ${response}`);
+        result(null, response);
+    })
+}
+
 Note.findAllCompleted = result =>
 {
     let query = "SELECT * FROM notes WHERE isCompleted = TRUE";

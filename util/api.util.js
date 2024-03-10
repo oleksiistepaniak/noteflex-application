@@ -9,6 +9,14 @@ function isString(input)
     }
 }
 
+function isNumber(input)
+{
+    if (typeof input !== "number")
+    {
+        throw Error(messages.apiFunctionMessages.VALUE_IS_NOT_NUMBER(input));
+    }
+}
+
 function isTitleValid(input)
 {
     if (input.length === 0 || input.length > constants.MAX_TITLE_LENGTH)
@@ -27,6 +35,7 @@ function isDescriptionValid(input)
 
 module.exports = {
     isString,
+    isNumber,
     isTitleValid,
     isDescriptionValid
 }

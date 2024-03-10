@@ -124,3 +124,30 @@ exports.findAllActive = (request, response) =>
         else response.send(data);
     })
 }
+
+exports.findOneById = (request, response) =>
+{
+    const id = request.params.id;
+
+    // VALIDATING IDENTIFIER - IS NUMBER
+    try {
+        util.isNumber(id);
+    } catch (error)
+    {
+        response.status(400).send({
+            message: error.message,
+        });
+        return;
+    }
+
+    Note.findOneById(id, (err, data) =>
+    {
+        if (err)
+        {
+            response.status(500).send({
+                message: err.message || `Some error occurred during retrieving a note by id ${id}`,
+            });
+        }
+        else response.send(data);
+    })
+}

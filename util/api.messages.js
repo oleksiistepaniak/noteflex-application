@@ -6,6 +6,7 @@ const apiMessages = {
 
 const apiFunctionMessages = {
     VALUE_IS_NOT_STRING: (value) => `The value: ${value} must have string type!`,
+    VALUE_IS_NOT_NUMBER: (value) => `The value: ${value} must have number type!`,
     NOTE_CREATING: {
         INVALID_TITLE:
             (title) => `Invalid title: ${title}.`

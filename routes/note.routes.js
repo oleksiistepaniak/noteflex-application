@@ -9,6 +9,7 @@ module.exports = app => {
     router.get("/:id", notes.findOneById);
     router.put("/:id", notes.updateById);
     router.patch("/makeCompleted/:id", notes.makeCompleted);
+    router.delete("/:id", notes.removeById);
 
     app.use("/api/notes", router);
 }

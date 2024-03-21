@@ -281,3 +281,36 @@ exports.makeCompleted = (request, response) =>
         } else response.send(data);
     })
 }
+
+exports.removeById = (request, response) =>
+{
+    const id = request.params.id;
+
+    // VALIDATING IDENTIFIER - IS NUMBER
+    try {
+        util.isNumber(id);
+    } catch (error)
+    {
+        response.status(400).send({
+            message: error.message,
+        });
+        return;
+    }
+
+    Note.removeById(id, (err, data) =>
+    {
+        if (err)
+        {
+            if (err.kind === "not_found")
+            {
+                response.status(400).send({
+                    message: `Not found Note with id ${id}`
+                })
+            } else {
+                response.status(500).send({
+                    message: err.message || `Some error occurred during removing a note by id: ${id}`,
+                });
+            }
+        } else response.send(data);
+    })
+}

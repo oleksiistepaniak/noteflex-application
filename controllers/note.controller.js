@@ -13,51 +13,17 @@ exports.create = (request, response) =>
         return;
     }
 
-    // VALIDATING TITLE - IS STRING
+    // VALIDATING REQUEST BODY REQUIRED FIELDS
     try
     {
         util.isString(request.body.title, response);
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message
-        });
-        return;
-    }
-
-    // VALIDATING TITLE - IS CORRECT LENGTH
-    try
-    {
         util.isTitleValid(request.body.title);
-
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
-    // VALIDATING DESCRIPTION - IS STRING
-    try
-    {
         util.isString(request.body.description);
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
-    // VALIDATING DESCRIPTION - IS CORRECT LENGTH
-    try
-    {
         util.isDescriptionValid(request.body.description);
     } catch (error)
     {
         response.status(400).send({
-            message: error.message,
+            message: error.message
         });
         return;
     }
@@ -157,17 +123,6 @@ exports.updateById = (request, response) =>
 
     const id = request.params.id;
 
-    // VALIDATING IDENTIFIER - IS NUMBER
-    try {
-        util.isNumber(id);
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body)
     {
@@ -177,46 +132,12 @@ exports.updateById = (request, response) =>
         return;
     }
 
-    // VALIDATING TITLE - IS STRING
-    try
-    {
+    // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
+    try {
+        util.isNumber(id);
         util.isString(request.body.title, response);
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message
-        });
-        return;
-    }
-
-    // VALIDATING TITLE - IS CORRECT LENGTH
-    try
-    {
         util.isTitleValid(request.body.title);
-
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
-    // VALIDATING DESCRIPTION - IS STRING
-    try
-    {
         util.isString(request.body.description);
-    } catch (error)
-    {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
-    // VALIDATING DESCRIPTION - IS CORRECT LENGTH
-    try
-    {
         util.isDescriptionValid(request.body.description);
     } catch (error)
     {

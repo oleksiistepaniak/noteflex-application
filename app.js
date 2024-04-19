@@ -13,6 +13,7 @@ app.get("/api", (request, response) => {
 });
 
 require("./routes/note.routes")(app);
+require("./routes/auth.routes")(app);
 
 app.listen(process.env.APP_PORT, () => {
    console.log(`Server has started its work successfully on port: ${process.env.APP_PORT}`);

@@ -35,7 +35,21 @@ function findAllTasks(params) {
     });
 }
 
+function findTaskById(params) {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM tasks WHERE userId = ${params.userId} AND id = ${params.id}`;
+        database.sql.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        })
+    });
+}
+
 module.exports = {
     createTask,
     findAllTasks,
+    findTaskById
 }

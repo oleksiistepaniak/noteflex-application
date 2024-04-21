@@ -114,7 +114,7 @@ exports.findAllActive = async (request, response) => {
     }
 }
 
-exports.findOneById = (request, response) => {
+exports.findOneById = async (request, response) => {
     const id = request.params.id;
 
     // VALIDATING IDENTIFIER - IS NUMBER
@@ -127,13 +127,23 @@ exports.findOneById = (request, response) => {
         return;
     }
 
-    Task.findOneById(id, (err, data) => {
-        if (err) {
-            response.status(500).send({
-                message: err.message || `Some error occurred during retrieving a note by id ${id}`,
+    try {
+        const task = await taskService.findTaskById({
+            userId: request.user.userId,
+            id: request.params.id,
+        });
+        response.status(200).send(task);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
             });
-        } else response.send(data);
-    })
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            })
+        }
+    }
 }
 
 exports.updateById = (request, response) => {

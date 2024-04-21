@@ -18,21 +18,27 @@ async function createTask(params) {
     });
 }
 
-// params consist of optional value title and required value userId
+// params consist of optional value params.title and required value params.userId
 async function findAllTasks(params) {
     const result = await taskRepository.findAllTasks(params);
     return result;
 }
 
-// params consist of optional value title and required values isCompleted to TRUE and userId
+// params consist of optional value params.title and required values params.isCompleted to TRUE and params.userId
 async function findAllCompletedTasks(params) {
     const result = await taskRepository.findAllTasks(params);
     return result;
 }
 
-// params consist of optional value title and required values isActive to TRUE and userId
+// params consist of optional value params.title and required values params.isActive to TRUE and params.userId
 async function findAllActiveTasks(params) {
     const result = await taskRepository.findAllTasks(params);
+    return result;
+}
+
+// params consist of required values params.userId and params.id (which is task id)
+async function findTaskById(params) {
+    const result = await taskRepository.findTaskById(params);
     return result;
 }
 
@@ -41,4 +47,5 @@ module.exports = {
     findAllTasks,
     findAllCompletedTasks,
     findAllActiveTasks,
+    findTaskById,
 }

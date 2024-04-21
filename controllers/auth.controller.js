@@ -1,8 +1,7 @@
 const User = require('../models/user.model');
 const util = require('../util/api.util');
 const messages = require('../util/api.messages');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const authenticationService = require('../services/auth.service');
 
 exports.register = async (request, response) =>
 {
@@ -64,30 +63,21 @@ exports.login = async (request, response) =>
         return;
     }
 
+    // CREATING OBJECT PARAMS
+    const params = {
+        email: request.body.email,
+        password: request.body.password,
+    };
+
     try {
-        const user = await User.findOneByEmail(request.body.email);
-
-        if (!user) {
-            return response.status(401).send({
-                message: messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL,
-            });
-        }
-
-        const isPasswordMatch = await bcrypt.compare(request.body.password, user.password);
-        if (!isPasswordMatch) {
-            return response.status(401).send({
-                message: messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL,
-            });
-        }
-
-        const token = jwt.sign({ userId: user.id }, "secret_key", { expiresIn: "1d" });
-        return response.status(200).send({
+        const token = await authenticationService.authenticate(params);
+        response.status(200).send({
             token,
         });
     } catch (error) {
-        console.error(error);
-        return response.status(500).send({
-            message: "Internal server error",
-        });
+        response.status(401).send({
+            message: error.message ?? "INTERNAL_SERVER_ERROR",
+        })
     }
 }
+

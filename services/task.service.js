@@ -24,14 +24,21 @@ async function findAllTasks(params) {
     return result;
 }
 
-// params include only one required value - userId
+// params consist of optional value title and required values isCompleted to TRUE and userId
 async function findAllCompletedTasks(params) {
-    const result = await taskRepository.findAllCompletedTasks(params);
+    const result = await taskRepository.findAllTasks(params);
+    return result;
+}
+
+// params consist of optional value title and required values isActive to TRUE and userId
+async function findAllActiveTasks(params) {
+    const result = await taskRepository.findAllTasks(params);
     return result;
 }
 
 module.exports = {
     createTask,
     findAllTasks,
-    findAllCompletedTasks
+    findAllCompletedTasks,
+    findAllActiveTasks,
 }

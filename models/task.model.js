@@ -26,42 +26,6 @@ Task.findOneById = (id, result) =>
     })
 }
 
-Task.findAllCompleted = result =>
-{
-    let query = "SELECT * FROM notes WHERE isCompleted = TRUE";
-
-    sql.query(query, (error, response) =>
-    {
-        if (error)
-        {
-            console.log(error);
-            result(error, null);
-            return;
-        }
-
-        console.log("completed notes: ", response);
-        result(null, response);
-    })
-}
-
-Task.findAllActive = result =>
-{
-    let query = "SELECT * FROM notes WHERE isCompleted = FALSE";
-
-    sql.query(query, (error, response) =>
-    {
-        if (error)
-        {
-            console.error(error);
-            result(error, null);
-            return;
-        }
-
-        console.log("active notes: ", response);
-        result(null, response);
-    })
-}
-
 Task.updateById = (id, note, result) =>
 {
     const query = "UPDATE notes SET title = ?, description = ?, isCompleted = ? WHERE id = ?";

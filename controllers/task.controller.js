@@ -76,6 +76,8 @@ exports.findAllCompleted = async (request, response) => {
     try {
         const tasks = await taskService.findAllCompletedTasks({
             userId: request.user.userId,
+            title: request.query.title ?? undefined,
+            isCompleted: true,
         });
         response.status(200).send(tasks);
     } catch (error) {
@@ -91,14 +93,25 @@ exports.findAllCompleted = async (request, response) => {
     }
 }
 
-exports.findAllActive = (request, response) => {
-    Task.findAllActive((err, data) => {
-        if (err) {
-            response.status(500).send({
-                message: err.message || "Some error occurred during retrieving active notes!",
+exports.findAllActive = async (request, response) => {
+    try {
+        const tasks = await taskService.findAllActiveTasks({
+            userId: request.user.userId,
+            title: request.query.title ?? undefined,
+            isActive: true,
+        });
+        response.status(200).send(tasks);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
             });
-        } else response.send(data);
-    })
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }
 
 exports.findOneById = (request, response) => {

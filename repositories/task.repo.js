@@ -17,7 +17,13 @@ function findAllTasks(params) {
     return new Promise((resolve, reject) => {
         let query = `SELECT * FROM tasks WHERE userId = ${params.userId}`;
         if (params.title) {
-            query += ` AND title LIKE '%${params.title}'`;
+            query += ` AND title LIKE '%${params.title}%'`;
+        }
+        if (params.isCompleted) {
+            query += ` AND isCompleted = TRUE`;
+        }
+        if (params.isActive) {
+            query += ` AND isCompleted = FALSE`;
         }
         database.sql.query(query, (error, results) => {
             if (error) {
@@ -29,21 +35,7 @@ function findAllTasks(params) {
     });
 }
 
-function findAllCompletedTasks(params) {
-    return new Promise((resolve, reject) => {
-        let query = `SELECT * FROM tasks WHERE userId = ${params.userId} AND isCompleted = TRUE`;
-        database.sql.query(query, (error, results) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        })
-    })
-}
-
 module.exports = {
     createTask,
     findAllTasks,
-    findAllCompletedTasks
 }

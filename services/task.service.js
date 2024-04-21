@@ -18,6 +18,13 @@ async function createTask(params) {
     });
 }
 
+// params consist of optional value title and required value userId
+async function findAllTasks(params) {
+    const result = await taskRepository.findAllTasks(params);
+    return result;
+}
+
 module.exports = {
     createTask,
+    findAllTasks,
 }

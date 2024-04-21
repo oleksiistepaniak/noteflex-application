@@ -8,27 +8,6 @@ const Task = function (newTask)
     this.userId = newTask.userId;
 };
 
-Task.findAll = (title, result) =>
-{
-    let query = "SELECT * FROM notes";
-
-    if (title)
-        query += ` WHERE title LIKE '%${title}%'`;
-
-    sql.query(query, (error, response) =>
-    {
-        if (error)
-        {
-            console.log(error);
-            result(error, null);
-            return;
-        }
-
-        console.log("notes: ", response);
-        result(null, response);
-    })
-}
-
 Task.findOneById = (id, result) =>
 {
     const query = `SELECT * FROM notes WHERE id = ${id}`;

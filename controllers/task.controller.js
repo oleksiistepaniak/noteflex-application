@@ -3,11 +3,9 @@ const util = require("../util/api.util");
 const messages = require("../util/api.messages");
 const taskService = require('../services/task.service');
 
-exports.create = async (request, response) =>
-{
+exports.create = async (request, response) => {
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body)
-    {
+    if (!request.body) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });
@@ -15,14 +13,12 @@ exports.create = async (request, response) =>
     }
 
     // VALIDATING REQUEST BODY REQUIRED FIELDS
-    try
-    {
+    try {
         util.isString(request.body.title, response);
         util.isTitleValid(request.body.title);
         util.isString(request.body.description);
         util.isDescriptionValid(request.body.description);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message
         });
@@ -56,85 +52,76 @@ exports.create = async (request, response) =>
 
 }
 
-exports.findAll = (request, response) =>
-{
-    const title = request.query.title;
+exports.findAll = async (request, response) => {
+    const title = request.query.title ?? undefined;
 
-    Task.findAll(title, (err, data) =>
-    {
-        if (err)
-        {
-            response.status(500).send({
-                message: err.message || "Some error occurred during retrieving notes!",
+    try {
+        const tasks = await taskService.findAllTasks({
+            title,
+            userId: request.user.userId,
+        });
+        response.status(200).send(tasks);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
             });
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            })
         }
-        else response.send(data);
-    })
+    }
 }
 
-exports.findAllCompleted = (request, response) =>
-{
-    Task.findAllCompleted((err, data) =>
-    {
-        if (err)
-        {
+exports.findAllCompleted = (request, response) => {
+    Task.findAllCompleted((err, data) => {
+        if (err) {
             response.status(500).send({
                 message: err.message || "Some error occurred during retrieving completed notes!",
             });
-        }
-        else response.send(data);
+        } else response.send(data);
     })
 }
 
-exports.findAllActive = (request, response) =>
-{
-    Task.findAllActive((err, data) =>
-    {
-        if (err)
-        {
+exports.findAllActive = (request, response) => {
+    Task.findAllActive((err, data) => {
+        if (err) {
             response.status(500).send({
                 message: err.message || "Some error occurred during retrieving active notes!",
             });
-        }
-        else response.send(data);
+        } else response.send(data);
     })
 }
 
-exports.findOneById = (request, response) =>
-{
+exports.findOneById = (request, response) => {
     const id = request.params.id;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
         util.isNumber(id);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message,
         });
         return;
     }
 
-    Task.findOneById(id, (err, data) =>
-    {
-        if (err)
-        {
+    Task.findOneById(id, (err, data) => {
+        if (err) {
             response.status(500).send({
                 message: err.message || `Some error occurred during retrieving a note by id ${id}`,
             });
-        }
-        else response.send(data);
+        } else response.send(data);
     })
 }
 
-exports.updateById = (request, response) =>
-{
+exports.updateById = (request, response) => {
 
     const id = request.params.id;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body)
-    {
+    if (!request.body) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });
@@ -148,8 +135,7 @@ exports.updateById = (request, response) =>
         util.isTitleValid(request.body.title);
         util.isString(request.body.description);
         util.isDescriptionValid(request.body.description);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message,
         });
@@ -163,11 +149,9 @@ exports.updateById = (request, response) =>
         isCompleted: request.body.isCompleted ?? false,
     });
 
-    Task.updateById(id, note, (err, data) =>
-    {
+    Task.updateById(id, note, (err, data) => {
         if (err) {
-            if (err.kind === "not_found")
-            {
+            if (err.kind === "not_found") {
                 response.status(400).send({
                     message: `Not found Note with id ${id}`,
                 });
@@ -180,26 +164,22 @@ exports.updateById = (request, response) =>
     })
 }
 
-exports.makeCompleted = (request, response) =>
-{
+exports.makeCompleted = (request, response) => {
     const id = request.params.id;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
         util.isNumber(id);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message,
         });
         return;
     }
 
-    Task.makeCompleted(id, (err, data) =>
-    {
+    Task.makeCompleted(id, (err, data) => {
         if (err) {
-            if (err.kind === "not_found")
-            {
+            if (err.kind === "not_found") {
                 response.status(400).send({
                     message: `Not found Note with id ${id}`,
                 })
@@ -212,27 +192,22 @@ exports.makeCompleted = (request, response) =>
     })
 }
 
-exports.removeById = (request, response) =>
-{
+exports.removeById = (request, response) => {
     const id = request.params.id;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
         util.isNumber(id);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message,
         });
         return;
     }
 
-    Task.removeById(id, (err, data) =>
-    {
-        if (err)
-        {
-            if (err.kind === "not_found")
-            {
+    Task.removeById(id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
                 response.status(400).send({
                     message: `Not found Note with id ${id}`
                 })

@@ -1,10 +1,14 @@
 const constants = require("../constants");
 
 const apiMessages = {
-    EMPTY_REQUEST_BODY: "Request body cannot be empty!",
+    EMPTY_REQUEST_BODY: "empty_request_body",
+    INTERNAL_SERVER_ERROR: "internal_server_error",
     AUTHENTICATION: {
-        INVALID_PASSWORD_OR_EMAIL: "Invalid password or email!",
+        INVALID_PASSWORD_OR_EMAIL: "invalid_password_or_email",
     },
+    REGISTRATION: {
+        USER_ALREADY_EXISTS: "user_exists",
+    }
 };
 
 const apiFunctionMessages = {

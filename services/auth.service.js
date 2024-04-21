@@ -2,8 +2,36 @@ const userRepository = require("../repositories/user.repo");
 const messages = require("../util/api.messages");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const User = require('../models/user.model');
+const userDtoMapper = require('../dto/user.dto.mapper');
 
-// PARAMS CONSIST OF PARAMS.PASSWORD AND PARAMS.EMAIL
+// params consist of params.email, params.password, params.age, params.firstName, params.lastName
+async function signup(params)
+{
+    const existingUser = await userRepository.findUserByEmail(params.email);
+    if (existingUser) {
+        throw new Error(messages.apiMessages.REGISTRATION.USER_ALREADY_EXISTS);
+    }
+
+    const hashedPassword = bcrypt.hash(params.password, 10);
+
+    // CREATING NEW INSTANCE OF USER VIA CONSTRUCTOR
+    const user = new User({
+        firstName: params.firstName,
+        lastName: params.lastName,
+        email: params.email,
+        password: hashedPassword,
+        age: params.age,
+    });
+
+    const result = await userRepository.createUser(user);
+    return userDtoMapper.mapUserToDto({
+        id: result.insertId,
+        user,
+    });
+}
+
+// params consist of params.password and params.email
 async function authenticate(params)
 {
         const user = await userRepository.findUserByEmail(params.email);
@@ -22,5 +50,6 @@ async function authenticate(params)
 }
 
 module.exports = {
+    signup,
     authenticate,
 }

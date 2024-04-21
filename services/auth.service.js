@@ -6,8 +6,7 @@ const User = require('../models/user.model');
 const userDtoMapper = require('../dto/user.dto.mapper');
 
 // params consist of params.email, params.password, params.age, params.firstName, params.lastName
-async function signup(params)
-{
+async function signup(params) {
     const existingUser = await userRepository.findUserByEmail(params.email);
     if (existingUser) {
         throw new Error(messages.apiMessages.REGISTRATION.USER_ALREADY_EXISTS);
@@ -32,21 +31,20 @@ async function signup(params)
 }
 
 // params consist of params.password and params.email
-async function authenticate(params)
-{
-        const user = await userRepository.findUserByEmail(params.email);
+async function authenticate(params) {
+    const user = await userRepository.findUserByEmail(params.email);
 
-        if (!user) {
-            throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
-        }
+    if (!user) {
+        throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
+    }
 
-        const isPasswordMatch = await bcrypt.compare(params.password, user.password);
-        if (!isPasswordMatch) {
-            throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
-        }
+    const isPasswordMatch = await bcrypt.compare(params.password, user.password);
+    if (!isPasswordMatch) {
+        throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
+    }
 
-        const token = jwt.sign({ userId: user.id }, "secret_key", { expiresIn: "1d" });
-        return token;
+    const token = jwt.sign({userId: user.id}, "secret_key", {expiresIn: "1d"});
+    return token;
 }
 
 module.exports = {

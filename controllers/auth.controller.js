@@ -2,11 +2,9 @@ const util = require('../util/api.util');
 const messages = require('../util/api.messages');
 const authenticationService = require('../services/auth.service');
 
-exports.register = async (request, response) =>
-{
+exports.register = async (request, response) => {
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body)
-    {
+    if (!request.body) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });
@@ -14,15 +12,13 @@ exports.register = async (request, response) =>
     }
 
     // VALIDATING REQUEST BODY REQUIRED PARAMS
-    try
-    {
+    try {
         util.isEmailValid(request.body.email);
         util.isPasswordValid(request.body.password);
         util.isFirstnameOrLastnameValid(request.body.firstName);
         util.isFirstnameOrLastnameValid(request.body.lastName);
         util.isUserAgeValid(request.body.age);
-    } catch (error)
-    {
+    } catch (error) {
         response.status(400).send({
             message: error.message,
         });
@@ -39,8 +35,8 @@ exports.register = async (request, response) =>
     };
 
     try {
-      const user = await authenticationService.signup(params);
-      response.status(200).send(user);
+        const user = await authenticationService.signup(params);
+        response.status(200).send(user);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -54,11 +50,9 @@ exports.register = async (request, response) =>
     }
 }
 
-exports.login = async (request, response) =>
-{
+exports.login = async (request, response) => {
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body)
-    {
+    if (!request.body) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });

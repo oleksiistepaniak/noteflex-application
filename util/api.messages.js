@@ -8,6 +8,10 @@ const apiMessages = {
     },
     REGISTRATION: {
         USER_ALREADY_EXISTS: "user_exists",
+    },
+    AUTH_MIDDLEWARE: {
+        TOKEN_NOT_PROVIDED: "token_not_provided",
+        INVALID_TOKEN: "invalid_token",
     }
 };
 

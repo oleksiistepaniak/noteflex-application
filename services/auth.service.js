@@ -12,7 +12,7 @@ async function signup(params) {
         throw new Error(messages.apiMessages.REGISTRATION.USER_ALREADY_EXISTS);
     }
 
-    const hashedPassword = bcrypt.hash(params.password, 10);
+    const hashedPassword = await bcrypt.hash(params.password, 10);
 
     // CREATING NEW INSTANCE OF USER VIA CONSTRUCTOR
     const user = new User({

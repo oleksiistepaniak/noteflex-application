@@ -1,9 +1,9 @@
-const sql = require("../database");
+const database = require("../db/database");
 
 function createUser(newUser) {
     return new Promise((resolve, reject) => {
         const query = `INSERT INTO users SET ?`;
-        sql.query(query, newUser, (error, results) => {
+        database.sql(query, newUser, (error, results) => {
             if (error) {
                 reject(error);
             } else {
@@ -16,7 +16,7 @@ function createUser(newUser) {
 function findUserByEmail(email) {
     return new Promise((resolve, reject) => {
         const query = `SELECT * FROM users WHERE email = ?`;
-        sql.query(query, [email], (error, results) => {
+        database.sql(query, [email], (error, results) => {
             if (error) {
                 reject(error);
             } else {

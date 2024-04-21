@@ -1,8 +1,9 @@
-const Note = require("../models/note.model");
+const Task = require("../models/task.model");
 const util = require("../util/api.util");
 const messages = require("../util/api.messages");
+const taskService = require('../services/task.service');
 
-exports.create = (request, response) =>
+exports.create = async (request, response) =>
 {
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body)
@@ -28,30 +29,38 @@ exports.create = (request, response) =>
         return;
     }
 
-    // CREATING NEW INSTANCE OF NOTE VIA CONSTRUCTOR
-    const note = new Note({
+    // CREATING OBJECT PARAMS
+    const params = {
         title: request.body.title,
         description: request.body.description,
         isCompleted: request.body.isCompleted ?? false,
-    });
+        userId: request.user.userId,
+    };
 
-    // SAVING CREATED INSTANCE INTO MYSQL
-    Note.create(note, (err, data) =>
-    {
-        if (err)
-        {
-            response.status(500).send({
-                message: err.message || "Some error occurred during creating a Note!",
+    try {
+        const task = await taskService.createTask(params);
+        response.status(200).send({
+            task,
+        });
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
             });
-        } else response.send(data);
-    });
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+
 }
 
 exports.findAll = (request, response) =>
 {
     const title = request.query.title;
 
-    Note.findAll(title, (err, data) =>
+    Task.findAll(title, (err, data) =>
     {
         if (err)
         {
@@ -65,7 +74,7 @@ exports.findAll = (request, response) =>
 
 exports.findAllCompleted = (request, response) =>
 {
-    Note.findAllCompleted((err, data) =>
+    Task.findAllCompleted((err, data) =>
     {
         if (err)
         {
@@ -79,7 +88,7 @@ exports.findAllCompleted = (request, response) =>
 
 exports.findAllActive = (request, response) =>
 {
-    Note.findAllActive((err, data) =>
+    Task.findAllActive((err, data) =>
     {
         if (err)
         {
@@ -106,7 +115,7 @@ exports.findOneById = (request, response) =>
         return;
     }
 
-    Note.findOneById(id, (err, data) =>
+    Task.findOneById(id, (err, data) =>
     {
         if (err)
         {
@@ -148,13 +157,13 @@ exports.updateById = (request, response) =>
     }
 
     // CREATING NEW INSTANCE OF NOTE VIA CONSTRUCTOR
-    const note = new Note({
+    const note = new Task({
         title: request.body.title,
         description: request.body.description,
         isCompleted: request.body.isCompleted ?? false,
     });
 
-    Note.updateById(id, note, (err, data) =>
+    Task.updateById(id, note, (err, data) =>
     {
         if (err) {
             if (err.kind === "not_found")
@@ -186,7 +195,7 @@ exports.makeCompleted = (request, response) =>
         return;
     }
 
-    Note.makeCompleted(id, (err, data) =>
+    Task.makeCompleted(id, (err, data) =>
     {
         if (err) {
             if (err.kind === "not_found")
@@ -218,7 +227,7 @@ exports.removeById = (request, response) =>
         return;
     }
 
-    Note.removeById(id, (err, data) =>
+    Task.removeById(id, (err, data) =>
     {
         if (err)
         {

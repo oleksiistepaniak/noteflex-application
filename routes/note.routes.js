@@ -1,7 +1,7 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 
 module.exports = app => {
-    const notes = require("../controllers/note.controller");
+    const notes = require("../controllers/task.controller");
     const router = require("express").Router();
     router.use(authMiddleware);
 

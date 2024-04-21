@@ -1,9 +1,9 @@
-const sql = require('../db/database');
+const database = require('../db/database');
 
 function createTask(newTask) {
     return new Promise((resolve, reject) => {
         const query = 'INSERT INTO tasks SET ?';
-        sql.query(query, newTask, (error, results) => {
+        database.sql.query(query, newTask, (error, results) => {
             if (error) {
                 reject(error);
             } else {
@@ -11,4 +11,8 @@ function createTask(newTask) {
             }
         })
     });
+}
+
+module.exports = {
+    createTask,
 }

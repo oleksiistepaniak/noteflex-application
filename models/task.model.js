@@ -1,29 +1,14 @@
 const sql = require('../db/database');
 
-const Note = function (newNote)
+const Task = function (newTask)
 {
-    this.title = newNote.title;
-    this.description = newNote.description;
-    this.isCompleted = newNote.isCompleted;
+    this.title = newTask.title;
+    this.description = newTask.description;
+    this.isCompleted = newTask.isCompleted;
+    this.userId = newTask.userId;
 };
 
-Note.create = (newNote, result) =>
-{
-    sql.query("INSERT INTO notes SET ?", newNote, (error, response) =>
-    {
-        if (error)
-        {
-            console.log(error);
-            result(error, null);
-            return;
-        }
-
-        console.log("created note: ", { id: response.insertId, ...newNote });
-        result(null, { id: response.insertId, ...newNote });
-    });
-};
-
-Note.findAll = (title, result) =>
+Task.findAll = (title, result) =>
 {
     let query = "SELECT * FROM notes";
 
@@ -44,7 +29,7 @@ Note.findAll = (title, result) =>
     })
 }
 
-Note.findOneById = (id, result) =>
+Task.findOneById = (id, result) =>
 {
     const query = `SELECT * FROM notes WHERE id = ${id}`;
 
@@ -62,7 +47,7 @@ Note.findOneById = (id, result) =>
     })
 }
 
-Note.findAllCompleted = result =>
+Task.findAllCompleted = result =>
 {
     let query = "SELECT * FROM notes WHERE isCompleted = TRUE";
 
@@ -80,7 +65,7 @@ Note.findAllCompleted = result =>
     })
 }
 
-Note.findAllActive = result =>
+Task.findAllActive = result =>
 {
     let query = "SELECT * FROM notes WHERE isCompleted = FALSE";
 
@@ -98,7 +83,7 @@ Note.findAllActive = result =>
     })
 }
 
-Note.updateById = (id, note, result) =>
+Task.updateById = (id, note, result) =>
 {
     const query = "UPDATE notes SET title = ?, description = ?, isCompleted = ? WHERE id = ?";
 
@@ -121,7 +106,7 @@ Note.updateById = (id, note, result) =>
     })
 }
 
-Note.makeCompleted = (id, result) =>
+Task.makeCompleted = (id, result) =>
 {
     const query = `UPDATE notes SET isCompleted = TRUE WHERE id = ${id}`;
 
@@ -145,7 +130,7 @@ Note.makeCompleted = (id, result) =>
     })
 }
 
-Note.removeById = (id, result) =>
+Task.removeById = (id, result) =>
 {
     const query = `DELETE FROM notes WHERE id = ${id}`;
 
@@ -169,4 +154,4 @@ Note.removeById = (id, result) =>
     })
 }
 
-module.exports = Note;
+module.exports = Task;

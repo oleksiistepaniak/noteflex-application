@@ -150,7 +150,7 @@ exports.findOneById = async (request, response) => {
 exports.updateById = async (request, response) => {
 
     const { id } = request.params;
-    const { title, description } = request.body;
+    const { title, description, isCompleted } = request.body;
     const { userId } = request.user;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
@@ -164,10 +164,10 @@ exports.updateById = async (request, response) => {
     // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
     try {
         util.isNumber(id);
-        util.isString(title);
-        util.isTitleValid(title);
-        util.isString(description);
-        util.isDescriptionValid(description);
+        util.isOptionalString(title);
+        util.isOptionalTitleValid(title);
+        util.isOptionalString(description);
+        util.isOptionalDescriptionValid(description);
     } catch (error) {
         response.status(400).send({
             message: error.message,
@@ -176,7 +176,7 @@ exports.updateById = async (request, response) => {
     }
 
     try {
-        const task = await taskService.updateTaskById({id, userId, title, description});
+        const task = await taskService.updateTaskById({id, userId, title, description, isCompleted});
         response.status(200).send({
             task,
         });

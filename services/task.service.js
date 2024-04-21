@@ -51,11 +51,17 @@ async function updateTaskById(params) {
 
     util.apiCheck(!(tasks.length === 0), apiMessages.UPDATE_TASK_BY_ID.TASK_IS_NOT_OWNED);
 
-    await taskRepository.updateTaskById(params);
+    await taskRepository.updateTaskById({
+        ...params,
+        title: params.title ?? tasks[0].title,
+        description: params.description ?? tasks[0].description,
+        isCompleted: params.isCompleted ?? tasks[0].isCompleted,
+    });
     return {
         ...tasks[0],
-        title: params.title,
-        description: params.description,
+        title: params.title ?? tasks[0].title,
+        description: params.description ?? tasks[0].description,
+        isCompleted: params.isCompleted ?? tasks[0].isCompleted,
     };
 }
 

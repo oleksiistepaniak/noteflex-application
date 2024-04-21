@@ -50,8 +50,10 @@ function findTaskById(params) {
 
 function updateTaskById(params) {
     return new Promise((resolve, reject) => {
-        const query = `UPDATE tasks SET title = ?, description = ? WHERE id = ? AND userId = ?`;
-        database.sql.query(query, [params.title, params.description, params.id, params.userId], (error, results) => {
+        const query = `UPDATE tasks SET title = ?, description = ?, isCompleted = ? WHERE id = ? AND userId = ?`;
+        database.sql.query(query,
+            [params.title, params.description, params.isCompleted, params.id, params.userId],
+            (error, results) => {
             if (error) {
                 reject(error);
             } else {

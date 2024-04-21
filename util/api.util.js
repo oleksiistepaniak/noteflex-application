@@ -11,6 +11,13 @@ function isString(input)
     }
 }
 
+function isOptionalString(input)
+{
+    if (input) {
+        isString(input);
+    }
+}
+
 function isNumber(input)
 {
     const number = parseInt(input);
@@ -39,11 +46,23 @@ function isTitleValid(input)
     }
 }
 
+function isOptionalTitleValid(input) {
+    if (input) {
+        isTitleValid(input);
+    }
+}
+
 function isDescriptionValid(input)
 {
     if (input.length < constants.MIN_DESCRIPTION_LENGTH || input.length > constants.MAX_DESCRIPTION_LENGTH)
     {
         throw Error(messages.apiFunctionMessages.NOTE_CREATING.INVALID_DESCRIPTION(input));
+    }
+}
+
+function isOptionalDescriptionValid(input) {
+    if (input) {
+        isDescriptionValid(input);
     }
 }
 
@@ -88,9 +107,12 @@ function isUserAgeValid(input)
 module.exports = {
     apiCheck,
     isString,
+    isOptionalString,
     isNumber,
     isTitleValid,
+    isOptionalTitleValid,
     isDescriptionValid,
+    isOptionalDescriptionValid,
     isEmailValid,
     isPasswordValid,
     isFirstnameOrLastnameValid,

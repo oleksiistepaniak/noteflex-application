@@ -82,4 +82,3 @@ exports.login = async (request, response) => {
         }
     }
 }
-

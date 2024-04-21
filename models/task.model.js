@@ -8,47 +8,6 @@ const Task = function (newTask)
     this.userId = newTask.userId;
 };
 
-Task.findOneById = (id, result) =>
-{
-    const query = `SELECT * FROM notes WHERE id = ${id}`;
-
-    sql.query(query, (error, response) =>
-    {
-        if (error)
-        {
-            console.log(error);
-            result(error, null);
-            return;
-        }
-
-        console.log(`note by id: ${id} ${response}`);
-        result(null, response);
-    })
-}
-
-Task.updateById = (id, note, result) =>
-{
-    const query = "UPDATE notes SET title = ?, description = ?, isCompleted = ? WHERE id = ?";
-
-    sql.query(query, [note.title, note.description, note.isCompleted, id], (error, response) => {
-        if (error)
-        {
-            console.error(error);
-            result(error, null);
-            return;
-        }
-
-        if (response.affectedRows === 0)
-        {
-            result({kind: "not_found"}, null);
-            return;
-        }
-
-        console.log("updated note: ", {id: id, ...note});
-        result(null, {id: id, ...note});
-    })
-}
-
 Task.makeCompleted = (id, result) =>
 {
     const query = `UPDATE notes SET isCompleted = TRUE WHERE id = ${id}`;

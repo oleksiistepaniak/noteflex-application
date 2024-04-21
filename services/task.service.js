@@ -1,6 +1,8 @@
 const Task = require('../models/task.model');
 const taskRepository = require('../repositories/task.repo');
 const taskDtoMapper = require('../dto/task.dto.mapper');
+const util = require('../util/api.util');
+const {apiMessages} = require("../util/api.messages");
 
 // params consist of params.userId, params.title, params.description, params.isCompleted
 async function createTask(params) {
@@ -42,10 +44,26 @@ async function findTaskById(params) {
     return result;
 }
 
+// params consist of required values params.userId, params.id (which is task id)
+// , params.title and params.description
+async function updateTaskById(params) {
+    const tasks = await taskRepository.findTaskById(params);
+
+    util.apiCheck(!(tasks.length === 0), apiMessages.UPDATE_TASK_BY_ID.TASK_IS_NOT_OWNED);
+
+    await taskRepository.updateTaskById(params);
+    return {
+        ...tasks[0],
+        title: params.title,
+        description: params.description,
+    };
+}
+
 module.exports = {
     createTask,
     findAllTasks,
     findAllCompletedTasks,
     findAllActiveTasks,
     findTaskById,
+    updateTaskById,
 }

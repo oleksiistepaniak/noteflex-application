@@ -12,6 +12,9 @@ const apiMessages = {
     AUTH_MIDDLEWARE: {
         TOKEN_NOT_PROVIDED: "token_not_provided",
         INVALID_TOKEN: "invalid_token",
+    },
+    UPDATE_TASK_BY_ID: {
+        TASK_IS_NOT_OWNED: "task_is_not_owned",
     }
 };
 

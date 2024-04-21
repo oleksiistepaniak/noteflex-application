@@ -48,8 +48,22 @@ function findTaskById(params) {
     });
 }
 
+function updateTaskById(params) {
+    return new Promise((resolve, reject) => {
+        const query = `UPDATE tasks SET title = ?, description = ? WHERE id = ? AND userId = ?`;
+        database.sql.query(query, [params.title, params.description, params.id, params.userId], (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        })
+    })
+}
+
 module.exports = {
     createTask,
     findAllTasks,
-    findTaskById
+    findTaskById,
+    updateTaskById,
 }

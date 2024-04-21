@@ -21,6 +21,12 @@ function isNumber(input)
     }
 }
 
+function apiCheck(condition, message) {
+    if (!condition) {
+        throw Error(message);
+    }
+}
+
 //#endregion
 
 //#region NOTE_CREATING_UPDATING_VALIDATION
@@ -80,6 +86,7 @@ function isUserAgeValid(input)
 //#endregion
 
 module.exports = {
+    apiCheck,
     isString,
     isNumber,
     isTitleValid,

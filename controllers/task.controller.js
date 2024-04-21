@@ -2,6 +2,7 @@ const Task = require("../models/task.model");
 const util = require("../util/api.util");
 const messages = require("../util/api.messages");
 const taskService = require('../services/task.service');
+const {apiMessages} = require("../util/api.messages");
 
 exports.create = async (request, response) => {
     // VALIDATING REQUEST BODY - IS NOT EMPTY
@@ -146,9 +147,11 @@ exports.findOneById = async (request, response) => {
     }
 }
 
-exports.updateById = (request, response) => {
+exports.updateById = async (request, response) => {
 
-    const id = request.params.id;
+    const { id } = request.params;
+    const { title, description } = request.body;
+    const { userId } = request.user;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body) {
@@ -161,10 +164,10 @@ exports.updateById = (request, response) => {
     // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
     try {
         util.isNumber(id);
-        util.isString(request.body.title, response);
-        util.isTitleValid(request.body.title);
-        util.isString(request.body.description);
-        util.isDescriptionValid(request.body.description);
+        util.isString(title);
+        util.isTitleValid(title);
+        util.isString(description);
+        util.isDescriptionValid(description);
     } catch (error) {
         response.status(400).send({
             message: error.message,
@@ -172,26 +175,22 @@ exports.updateById = (request, response) => {
         return;
     }
 
-    // CREATING NEW INSTANCE OF NOTE VIA CONSTRUCTOR
-    const note = new Task({
-        title: request.body.title,
-        description: request.body.description,
-        isCompleted: request.body.isCompleted ?? false,
-    });
-
-    Task.updateById(id, note, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                response.status(400).send({
-                    message: `Not found Note with id ${id}`,
-                });
-            } else {
-                response.status(500).send({
-                    message: `Some error occurred while updating Note by id ${id}`,
-                });
-            }
-        } else response.send(data);
-    })
+    try {
+        const task = await taskService.updateTaskById({id, userId, title, description});
+        response.status(200).send({
+            task,
+        });
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }
 
 exports.makeCompleted = (request, response) => {

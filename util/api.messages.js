@@ -2,6 +2,9 @@ const constants = require("../constants");
 
 const apiMessages = {
     EMPTY_REQUEST_BODY: "Request body cannot be empty!",
+    AUTHENTICATION: {
+        INVALID_PASSWORD_OR_EMAIL: "Invalid password or email!",
+    },
 };
 
 const apiFunctionMessages = {

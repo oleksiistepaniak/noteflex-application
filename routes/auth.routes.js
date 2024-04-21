@@ -4,6 +4,7 @@ module.exports = app =>
     const router = require("express").Router();
 
     router.post("/register", auth.register);
+    router.post("/login", auth.login);
 
     app.use("/api", router);
 }

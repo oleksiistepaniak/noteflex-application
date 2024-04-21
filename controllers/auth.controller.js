@@ -1,6 +1,8 @@
 const User = require('../models/user.model');
 const util = require('../util/api.util');
 const messages = require('../util/api.messages');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.register = async (request, response) =>
 {
@@ -49,4 +51,43 @@ exports.register = async (request, response) =>
             });
         } else response.send(data);
     });
+}
+
+exports.login = async (request, response) =>
+{
+    // VALIDATING REQUEST BODY - IS NOT EMPTY
+    if (!request.body)
+    {
+        response.status(400).send({
+            message: messages.apiMessages.EMPTY_REQUEST_BODY,
+        });
+        return;
+    }
+
+    try {
+        const user = await User.findOneByEmail(request.body.email);
+
+        if (!user) {
+            return response.status(401).send({
+                message: messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL,
+            });
+        }
+
+        const isPasswordMatch = await bcrypt.compare(request.body.password, user.password);
+        if (!isPasswordMatch) {
+            return response.status(401).send({
+                message: messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL,
+            });
+        }
+
+        const token = jwt.sign({ userId: user.id }, "secret_key", { expiresIn: "1d" });
+        return response.status(200).send({
+            token,
+        });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({
+            message: "Internal server error",
+        });
+    }
 }

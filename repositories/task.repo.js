@@ -29,7 +29,21 @@ function findAllTasks(params) {
     });
 }
 
+function findAllCompletedTasks(params) {
+    return new Promise((resolve, reject) => {
+        let query = `SELECT * FROM tasks WHERE userId = ${params.userId} AND isCompleted = TRUE`;
+        database.sql.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        })
+    })
+}
+
 module.exports = {
     createTask,
     findAllTasks,
+    findAllCompletedTasks
 }

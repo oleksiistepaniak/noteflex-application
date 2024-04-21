@@ -67,19 +67,28 @@ exports.findAll = async (request, response) => {
         } else {
             response.status(500).send({
                 message: messages.apiMessages.INTERNAL_SERVER_ERROR,
-            })
+            });
         }
     }
 }
 
-exports.findAllCompleted = (request, response) => {
-    Task.findAllCompleted((err, data) => {
-        if (err) {
-            response.status(500).send({
-                message: err.message || "Some error occurred during retrieving completed notes!",
+exports.findAllCompleted = async (request, response) => {
+    try {
+        const tasks = await taskService.findAllCompletedTasks({
+            userId: request.user.userId,
+        });
+        response.status(200).send(tasks);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
             });
-        } else response.send(data);
-    })
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }
 
 exports.findAllActive = (request, response) => {

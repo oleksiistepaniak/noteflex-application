@@ -24,7 +24,14 @@ async function findAllTasks(params) {
     return result;
 }
 
+// params include only one required value - userId
+async function findAllCompletedTasks(params) {
+    const result = await taskRepository.findAllCompletedTasks(params);
+    return result;
+}
+
 module.exports = {
     createTask,
     findAllTasks,
+    findAllCompletedTasks
 }

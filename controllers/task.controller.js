@@ -53,11 +53,9 @@ exports.create = async (request, response) => {
 }
 
 exports.findAll = async (request, response) => {
-    const title = request.query.title ?? undefined;
-
     try {
         const tasks = await taskService.findAllTasks({
-            title,
+            title: request.query.title ?? undefined,
             userId: request.user.userId,
         });
         response.status(200).send(tasks);

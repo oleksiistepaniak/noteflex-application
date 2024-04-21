@@ -193,8 +193,10 @@ exports.updateById = async (request, response) => {
     }
 }
 
-exports.makeCompleted = (request, response) => {
+exports.makeCompleted = async (request, response) => {
     const id = request.params.id;
+    const { userId } = request.user;
+    const { isCompleted } = request.body;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
@@ -206,19 +208,20 @@ exports.makeCompleted = (request, response) => {
         return;
     }
 
-    Task.makeCompleted(id, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                response.status(400).send({
-                    message: `Not found Note with id ${id}`,
-                })
-            } else {
-                response.status(500).send({
-                    message: `Some error occurred while making completed Note by id ${id}`,
-                });
-            }
-        } else response.send(data);
-    })
+    try {
+        const task = await taskService.makeTaskCompletedOrActiveById({ id, userId, isCompleted });
+        response.status(200).send(task);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }
 
 exports.removeById = (request, response) => {

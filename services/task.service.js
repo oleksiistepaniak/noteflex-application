@@ -65,6 +65,18 @@ async function updateTaskById(params) {
     };
 }
 
+async function makeTaskCompletedOrActiveById(params) {
+    const tasks = await taskRepository.findTaskById(params);
+
+    util.apiCheck(!(tasks.length === 0), apiMessages.MAKE_TASK_COMPLETED.TASK_IS_NOT_OWNED);
+
+    await updateTaskById(params);
+    return {
+        ...tasks[0],
+        isCompleted: params.isCompleted,
+    }
+}
+
 module.exports = {
     createTask,
     findAllTasks,
@@ -72,4 +84,5 @@ module.exports = {
     findAllActiveTasks,
     findTaskById,
     updateTaskById,
+    makeTaskCompletedOrActiveById,
 }

@@ -14,5 +14,5 @@ module.exports = app => {
     router.patch("/makeCompleted/:id", notes.makeCompleted);
     router.delete("/:id", notes.removeById);
 
-    app.use("/api/notes", router);
+    app.use("/api/tasks", router);
 }

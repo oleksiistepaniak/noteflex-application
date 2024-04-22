@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 
-require("./routes/note.routes")(app);
+require("./routes/task.routes")(app);
 require("./routes/auth.routes")(app);
 
 app.listen(process.env.APP_PORT, async () => {

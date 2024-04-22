@@ -1,4 +1,4 @@
-const messages = require("../util/api.messages");
+const messages = require("./api.messages");
 const constants = require("../constants");
 
 //#region GENERAL FUNCTIONS FOR VALIDATION

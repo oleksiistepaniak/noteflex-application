@@ -29,8 +29,8 @@ function executeSqlScript(sqlScript) {
     })
 }
 
-const createUsersTableSql = fs.readFileSync('./db/create_users_table.sql', 'utf8');
-const createTasksTableSql = fs.readFileSync('./db/create_tasks_table.sql', 'utf8');
+const createUsersTableSql = fs.readFileSync('./src/db/create_users_table.sql', 'utf8');
+const createTasksTableSql = fs.readFileSync('./src/db/create_tasks_table.sql', 'utf8');
 
 async function initializeDatabase() {
     try {

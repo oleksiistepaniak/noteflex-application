@@ -5,6 +5,9 @@ const taskService = require('../services/task.service');
 const {apiMessages} = require("../util/api.messages");
 
 exports.create = async (request, response) => {
+    const { title, description, isCompleted } = request.body;
+    const { userId } = request.user;
+
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body) {
         response.status(400).send({
@@ -15,10 +18,10 @@ exports.create = async (request, response) => {
 
     // VALIDATING REQUEST BODY REQUIRED FIELDS
     try {
-        util.isString(request.body.title, response);
-        util.isTitleValid(request.body.title);
-        util.isString(request.body.description);
-        util.isDescriptionValid(request.body.description);
+        util.isString(title);
+        util.isTitleValid(title);
+        util.isString(description);
+        util.isDescriptionValid(description);
     } catch (error) {
         response.status(400).send({
             message: error.message
@@ -27,12 +30,7 @@ exports.create = async (request, response) => {
     }
 
     // CREATING OBJECT PARAMS
-    const params = {
-        title: request.body.title,
-        description: request.body.description,
-        isCompleted: request.body.isCompleted ?? false,
-        userId: request.user.userId,
-    };
+    const params = { title, description, isCompleted: isCompleted ?? false, userId };
 
     try {
         const task = await taskService.createTask(params);
@@ -54,11 +52,11 @@ exports.create = async (request, response) => {
 }
 
 exports.findAll = async (request, response) => {
+    const { userId } = request.user;
+    const { title } = request.query;
+
     try {
-        const tasks = await taskService.findAllTasks({
-            title: request.query.title ?? undefined,
-            userId: request.user.userId,
-        });
+        const tasks = await taskService.findAllTasks({ title, userId });
         response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
@@ -74,12 +72,10 @@ exports.findAll = async (request, response) => {
 }
 
 exports.findAllCompleted = async (request, response) => {
+    const { userId } = request.user;
+    const { title } = request.query;
     try {
-        const tasks = await taskService.findAllCompletedTasks({
-            userId: request.user.userId,
-            title: request.query.title ?? undefined,
-            isCompleted: true,
-        });
+        const tasks = await taskService.findAllCompletedTasks({ userId, title, isCompleted: true });
         response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
@@ -95,12 +91,11 @@ exports.findAllCompleted = async (request, response) => {
 }
 
 exports.findAllActive = async (request, response) => {
+    const { userId } = request.user;
+    const { title } = request.query;
+
     try {
-        const tasks = await taskService.findAllActiveTasks({
-            userId: request.user.userId,
-            title: request.query.title ?? undefined,
-            isActive: true,
-        });
+        const tasks = await taskService.findAllActiveTasks({userId, title, isActive: true});
         response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
@@ -116,7 +111,8 @@ exports.findAllActive = async (request, response) => {
 }
 
 exports.findOneById = async (request, response) => {
-    const id = request.params.id;
+    const { id } = request.params;
+    const { userId } = request.user;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
@@ -129,10 +125,7 @@ exports.findOneById = async (request, response) => {
     }
 
     try {
-        const task = await taskService.findTaskById({
-            userId: request.user.userId,
-            id: request.params.id,
-        });
+        const task = await taskService.findTaskById({ userId, id });
         response.status(200).send(task);
     } catch (error) {
         if (error.message) {

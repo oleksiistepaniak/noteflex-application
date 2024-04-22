@@ -3,6 +3,8 @@ const messages = require('../util/api.messages');
 const authenticationService = require('../services/auth.service');
 
 exports.register = async (request, response) => {
+    const { email, password, firstName, lastName, age } = request.body;
+
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body) {
         response.status(400).send({
@@ -13,11 +15,11 @@ exports.register = async (request, response) => {
 
     // VALIDATING REQUEST BODY REQUIRED PARAMS
     try {
-        util.isEmailValid(request.body.email);
-        util.isPasswordValid(request.body.password);
-        util.isFirstnameOrLastnameValid(request.body.firstName);
-        util.isFirstnameOrLastnameValid(request.body.lastName);
-        util.isUserAgeValid(request.body.age);
+        util.isEmailValid(email);
+        util.isPasswordValid(password);
+        util.isFirstnameOrLastnameValid(firstName);
+        util.isFirstnameOrLastnameValid(lastName);
+        util.isUserAgeValid(age);
     } catch (error) {
         response.status(400).send({
             message: error.message,
@@ -26,13 +28,7 @@ exports.register = async (request, response) => {
     }
 
     // CREATING OBJECT PARAMS
-    const params = {
-        email: request.body.email,
-        password: request.body.password,
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        age: request.body.age,
-    };
+    const params = { email, password, firstName, lastName, age };
 
     try {
         const user = await authenticationService.signup(params);
@@ -51,6 +47,8 @@ exports.register = async (request, response) => {
 }
 
 exports.login = async (request, response) => {
+    const { email, password } = request.body;
+
     // VALIDATING REQUEST BODY - IS NOT EMPTY
     if (!request.body) {
         response.status(400).send({
@@ -60,10 +58,7 @@ exports.login = async (request, response) => {
     }
 
     // CREATING OBJECT PARAMS
-    const params = {
-        email: request.body.email,
-        password: request.body.password,
-    };
+    const params = { email, password };
 
     try {
         const token = await authenticationService.authenticate(params);

@@ -18,7 +18,10 @@ const apiMessages = {
     },
     MAKE_TASK_COMPLETED: {
         TASK_IS_NOT_OWNED: "task_is_not_owned",
-    }
+    },
+    REMOVE_TASK_BY_ID: {
+        TASK_IS_NOW_OWNED: "task_is_not_owned",
+    },
 };
 
 const apiFunctionMessages = {

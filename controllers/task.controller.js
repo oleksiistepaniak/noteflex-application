@@ -1,4 +1,3 @@
-const Task = require("../models/task.model");
 const util = require("../util/api.util");
 const messages = require("../util/api.messages");
 const taskService = require('../services/task.service');
@@ -217,8 +216,9 @@ exports.makeCompleted = async (request, response) => {
     }
 }
 
-exports.removeById = (request, response) => {
-    const id = request.params.id;
+exports.removeById = async (request, response) => {
+    const { id } = request.params;
+    const { userId } = request.user;
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
@@ -230,17 +230,18 @@ exports.removeById = (request, response) => {
         return;
     }
 
-    Task.removeById(id, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                response.status(400).send({
-                    message: `Not found Note with id ${id}`
-                })
-            } else {
-                response.status(500).send({
-                    message: err.message || `Some error occurred during removing a note by id: ${id}`,
-                });
-            }
-        } else response.send(data);
-    })
+    try {
+        const task = await taskService.deleteTaskById({ id, userId });
+        response.status(200).send(task);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }

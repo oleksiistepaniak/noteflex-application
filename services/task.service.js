@@ -77,6 +77,18 @@ async function makeTaskCompletedOrActiveById(params) {
     }
 }
 
+async function deleteTaskById(params) {
+    const tasks = await taskRepository.findTaskById(params);
+
+    util.apiCheck(!(tasks.length === 0), apiMessages.REMOVE_TASK_BY_ID.TASK_IS_NOW_OWNED);
+
+    await taskRepository.deleteTaskById(params);
+
+    return {
+        ...tasks[0],
+    }
+}
+
 module.exports = {
     createTask,
     findAllTasks,
@@ -85,4 +97,5 @@ module.exports = {
     findTaskById,
     updateTaskById,
     makeTaskCompletedOrActiveById,
+    deleteTaskById,
 }

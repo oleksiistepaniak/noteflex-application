@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require('bcryptjs');
+const request = require('supertest');
 
 let app;
 let server;
@@ -11,6 +12,12 @@ const validUser = {
     firstName: 'Alex',
     lastName: 'Stepaniak',
     age: 22,
+};
+
+const validTask = {
+    title: 'English Homework',
+    description: 'Exercise 2 Page 132',
+    isCompleted: false,
 };
 
 const validCredentialsForLogin = {
@@ -44,6 +51,13 @@ function dispose() {
     }
 }
 
+async function getValidToken() {
+    const response = await request(app)
+        .post('/api/login')
+        .send({...validCredentialsForLogin});
+    return response.body.token;
+}
+
 async function setValidUser() {
     const hashedPassword = await bcrypt.hash(validUser.password, 10);
     await db.executeSqlScript(`INSERT INTO users (email, password, age, firstName, lastName)
@@ -64,7 +78,9 @@ module.exports = {
     dispose,
     validUser,
     validCredentialsForLogin,
+    validTask,
     clearDb,
     initDb,
     setValidUser,
+    getValidToken,
 }

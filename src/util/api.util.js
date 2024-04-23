@@ -3,11 +3,11 @@ const constants = require("../constants");
 
 //#region GENERAL FUNCTIONS FOR VALIDATION
 
-function isString(input)
+function isString(input, message)
 {
     if (typeof input !== "string")
     {
-        throw Error(messages.apiFunctionMessages.VALUE_IS_NOT_STRING(input));
+        throw Error(message);
     }
 }
 
@@ -42,7 +42,7 @@ function isTitleValid(input)
 {
     if (input.length === 0 || input.length > constants.MAX_TITLE_LENGTH)
     {
-        throw Error(messages.apiFunctionMessages.NOTE_CREATING.INVALID_TITLE(input));
+        throw Error(messages.apiMessages.TASK.INVALID_TITLE_LENGTH);
     }
 }
 
@@ -56,7 +56,7 @@ function isDescriptionValid(input)
 {
     if (input.length < constants.MIN_DESCRIPTION_LENGTH || input.length > constants.MAX_DESCRIPTION_LENGTH)
     {
-        throw Error(messages.apiFunctionMessages.NOTE_CREATING.INVALID_DESCRIPTION(input));
+        throw Error(messages.apiMessages.TASK.INVALID_DESCRIPTION_LENGTH);
     }
 }
 

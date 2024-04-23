@@ -17,14 +17,12 @@ const apiMessages = {
         TOKEN_NOT_PROVIDED: "token_not_provided",
         INVALID_TOKEN: "invalid_token",
     },
-    UPDATE_TASK_BY_ID: {
-        TASK_IS_NOT_OWNED: "task_is_not_owned",
-    },
-    MAKE_TASK_COMPLETED: {
-        TASK_IS_NOT_OWNED: "task_is_not_owned",
-    },
-    REMOVE_TASK_BY_ID: {
-        TASK_IS_NOW_OWNED: "task_is_not_owned",
+    TASK: {
+        TITLE_NOT_STRING: 'title_not_string',
+        INVALID_TITLE_LENGTH: 'invalid_title_length',
+        TASK_IS_NOT_OWNED: 'task_is_not_owned',
+        DESCRIPTION_NOT_STRING: 'description_not_string',
+        INVALID_DESCRIPTION_LENGTH: 'invalid_description_length',
     },
 };
 

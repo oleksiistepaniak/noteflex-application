@@ -17,9 +17,9 @@ exports.create = async (request, response) => {
 
     // VALIDATING REQUEST BODY REQUIRED FIELDS
     try {
-        util.isString(title);
+        util.isString(title, apiMessages.TASK.TITLE_NOT_STRING);
         util.isTitleValid(title);
-        util.isString(description);
+        util.isString(description, apiMessages.TASK.DESCRIPTION_NOT_STRING);
         util.isDescriptionValid(description);
     } catch (error) {
         response.status(400).send({

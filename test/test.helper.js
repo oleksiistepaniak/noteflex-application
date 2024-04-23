@@ -1,5 +1,13 @@
 const express = require("express");
 
+const validUser = {
+    email: 'alex@gmail.com',
+    password: 'alexALEX228',
+    firstName: 'Alex',
+    lastName: 'Stepaniak',
+    age: 22,
+};
+
 function init() {
     require("dotenv").config({ path: './.test.env' });
     const database = require("../src/db/database");
@@ -21,11 +29,7 @@ function init() {
     };
 }
 
-function generateInvalidPassword(symbol, numberOfRepeats) {
-    return symbol.repeat(numberOfRepeats);
-}
-
 module.exports = {
     init,
-    generateInvalidPassword,
+    validUser,
 }

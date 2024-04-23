@@ -7,9 +7,10 @@ const apiMessages = {
         INVALID_PASSWORD_OR_EMAIL: "invalid_password_or_email",
     },
     REGISTRATION: {
-        USER_ALREADY_EXISTS: "user_exists",
-        INVALID_EMAIL: "invalid_email",
-        INVALID_PASSWORD: "invalid_password",
+        USER_ALREADY_EXISTS: 'user_exists',
+        INVALID_EMAIL: 'invalid_email',
+        INVALID_PASSWORD: 'invalid_password',
+        INVALID_CREDENTIALS: 'invalid_credentials'
     },
     AUTH_MIDDLEWARE: {
         TOKEN_NOT_PROVIDED: "token_not_provided",

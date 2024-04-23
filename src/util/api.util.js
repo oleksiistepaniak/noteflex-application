@@ -88,9 +88,9 @@ function isPasswordValid(input)
 
 function isFirstnameOrLastnameValid(input)
 {
-    if (input.length < constants.MIN_NAME_LENGTH || input.length > constants.MAX_NAME_LENGTH)
+    if (!input || input.length < constants.MIN_NAME_LENGTH || input.length > constants.MAX_NAME_LENGTH)
     {
-        throw Error(messages.apiFunctionMessages.USER_REGISTER.INVALID_FIRSTNAME_OR_SURNAME(input));
+        throw Error(messages.apiMessages.REGISTRATION.INVALID_CREDENTIALS);
     }
 }
 

@@ -12,7 +12,7 @@ async function signup(params) {
         throw new Error(messages.apiMessages.REGISTRATION.USER_ALREADY_EXISTS);
     }
 
-    const hashedPassword = await bcrypt.hash(params.password, 10);
+    const hashedPassword = await bcrypt.hash(params.password, parseInt(process.env.SALT));
 
     // CREATING NEW INSTANCE OF USER VIA CONSTRUCTOR
     const user = new User({
@@ -43,7 +43,7 @@ async function authenticate(params) {
         throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
     }
 
-    const token = jwt.sign({userId: user.id}, "secret_key", {expiresIn: "1d"});
+    const token = jwt.sign({userId: user.id}, process.env.SECRET_KEY, {expiresIn: "1d"});
     return token;
 }
 

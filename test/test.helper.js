@@ -59,7 +59,7 @@ async function getValidToken() {
 }
 
 async function setValidUser() {
-    const hashedPassword = await bcrypt.hash(validUser.password, 10);
+    const hashedPassword = await bcrypt.hash(validUser.password, parseInt(process.env.SALT));
     await db.executeSqlScript(`INSERT INTO users (email, password, age, firstName, lastName)
     VALUES (?, ?, ?, ?, ?);`, [validUser.email, hashedPassword, validUser.age, validUser.firstName, validUser.lastName]);
 }

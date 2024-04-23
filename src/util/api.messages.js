@@ -10,7 +10,8 @@ const apiMessages = {
         USER_ALREADY_EXISTS: 'user_exists',
         INVALID_EMAIL: 'invalid_email',
         INVALID_PASSWORD: 'invalid_password',
-        INVALID_CREDENTIALS: 'invalid_credentials'
+        INVALID_CREDENTIALS: 'invalid_credentials',
+        INVALID_AGE: 'invalid_age',
     },
     AUTH_MIDDLEWARE: {
         TOKEN_NOT_PROVIDED: "token_not_provided",

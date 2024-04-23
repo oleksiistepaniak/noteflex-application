@@ -4,21 +4,18 @@ const should = require('should');
 const constants = require('../../../src/constants');
 
 describe('auth.test', () => {
-    let application;
-    let testServer;
+    let app;
 
     before(() => {
-        const { app, server } = t.init();
-        application = app;
-        testServer = server;
+        app = t.init();
     })
 
     after(() => {
-        testServer.close();
+        t.dispose();
     })
 
     it('empty request body', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .expect(400);
 
@@ -29,7 +26,7 @@ describe('auth.test', () => {
     });
 
     it('empty email', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -44,7 +41,7 @@ describe('auth.test', () => {
     });
 
     it('null email', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -59,7 +56,7 @@ describe('auth.test', () => {
     });
 
     it('invalid email', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -74,7 +71,7 @@ describe('auth.test', () => {
     });
 
     it('empty password', async () => {
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -89,7 +86,7 @@ describe('auth.test', () => {
     });
 
     it('null password', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -105,7 +102,7 @@ describe('auth.test', () => {
 
     it('password less than min required characters', async () => {
         const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH - 1);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -121,7 +118,7 @@ describe('auth.test', () => {
 
     it('password more than max required characters', async () => {
         const password = 'a'.repeat(constants.MAX_PASSWORD_LENGTH);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -137,7 +134,7 @@ describe('auth.test', () => {
 
     it('password includes only uppercase letters', async () => {
         const password = "A".repeat(constants.MIN_PASSWORD_LENGTH);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -153,7 +150,7 @@ describe('auth.test', () => {
 
     it('password includes only lowercase letters', async () => {
        const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH);
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -169,7 +166,7 @@ describe('auth.test', () => {
 
     it('password includes only digits', async () => {
        const password = '2'.repeat(constants.MIN_PASSWORD_LENGTH);
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -185,7 +182,7 @@ describe('auth.test', () => {
 
     it('password includes only uppercase and lowercase letters', async () => {
        const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + 'A'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -201,7 +198,7 @@ describe('auth.test', () => {
 
     it('password includes only lowercase letters and digits', async () => {
        const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + '2'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -217,7 +214,7 @@ describe('auth.test', () => {
 
     it('password includes only uppercase letters and digits', async () => {
         const password = 'A'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + '2'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -232,7 +229,7 @@ describe('auth.test', () => {
     });
 
     it('empty firstName', async () => {
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -247,7 +244,7 @@ describe('auth.test', () => {
     });
 
     it('null firstName', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -263,7 +260,7 @@ describe('auth.test', () => {
 
     it('firstName less than min required symbols', async () => {
        const firstName = 'a'.repeat(constants.MIN_NAME_LENGTH - 1);
-       const response = await request(application)
+       const response = await request(app)
            .post('/api/register')
            .send({
                ...t.validUser,
@@ -279,7 +276,7 @@ describe('auth.test', () => {
 
     it('firstName more than max required symbols', async () => {
         const firstName = 'a'.repeat(constants.MAX_NAME_LENGTH + 1);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -294,7 +291,7 @@ describe('auth.test', () => {
     });
 
     it('empty lastName', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -309,7 +306,7 @@ describe('auth.test', () => {
     });
 
     it('null lastName', async () => {
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -323,9 +320,24 @@ describe('auth.test', () => {
         should(response.status).deepEqual(400);
     });
 
+    it('bool lastName', async () => {
+        const response = await request(app)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                firstName: true,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
+
     it('lastName less than min required symbols', async () => {
         const lastName = 'a'.repeat(constants.MIN_NAME_LENGTH - 1);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -341,7 +353,7 @@ describe('auth.test', () => {
 
     it('lastName more than max required symbols', async () => {
         const lastName = 'a'.repeat(constants.MAX_NAME_LENGTH + 1);
-        const response = await request(application)
+        const response = await request(app)
             .post('/api/register')
             .send({
                 ...t.validUser,
@@ -351,6 +363,21 @@ describe('auth.test', () => {
 
         should(response.body).deepEqual({
             message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('bool age', async () => {
+        const response = await request(app)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                age: true,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_age',
         });
         should(response.status).deepEqual(400);
     });

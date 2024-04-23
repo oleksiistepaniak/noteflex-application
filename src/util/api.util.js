@@ -88,7 +88,8 @@ function isPasswordValid(input)
 
 function isFirstnameOrLastnameValid(input)
 {
-    if (!input || input.length < constants.MIN_NAME_LENGTH || input.length > constants.MAX_NAME_LENGTH)
+    if (typeof input !== 'string'
+        || input.length < constants.MIN_NAME_LENGTH || input.length > constants.MAX_NAME_LENGTH)
     {
         throw Error(messages.apiMessages.REGISTRATION.INVALID_CREDENTIALS);
     }
@@ -96,9 +97,9 @@ function isFirstnameOrLastnameValid(input)
 
 function isUserAgeValid(input)
 {
-    if (input < constants.MIN_USER_AGE_VALUE || input > constants.MAX_USER_AGE_VALUE)
+    if (typeof input !== 'number' || input < constants.MIN_USER_AGE_VALUE || input > constants.MAX_USER_AGE_VALUE)
     {
-        throw Error(messages.apiFunctionMessages.USER_REGISTER.INVALID_AGE(input));
+        throw Error(messages.apiMessages.REGISTRATION.INVALID_AGE);
     }
 }
 

@@ -10,14 +10,14 @@ const pool = mysql.createPool({
     connectionLimit: 10,
 });
 
-function executeSqlScript(sqlScript) {
+function executeSqlScript(sqlScript, array) {
     return new Promise((resolve, reject) => {
         pool.getConnection((error, connection) => {
             if (error) {
                 reject(error);
                 return;
             }
-            connection.query(sqlScript, (error, results, _fields) => {
+            connection.query(sqlScript, array, (error, results, _fields) => {
                 connection.release();
                 if (error) {
                     reject(error);
@@ -45,4 +45,5 @@ async function initializeDatabase() {
 module.exports = {
     sql: pool,
     initializeDatabase,
+    executeSqlScript,
 };

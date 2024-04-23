@@ -3,15 +3,17 @@ const request = require('supertest');
 const should = require('should');
 const constants = require('../../../src/constants');
 
-describe('auth.test', () => {
+describe('reg.test', () => {
     let app;
 
-    before(() => {
+    before(async () => {
         app = t.init();
+        await t.initDb();
     })
 
-    after(() => {
+    after(async () => {
         t.dispose();
+        await t.clearDb();
     })
 
     it('empty request body', async () => {
@@ -380,5 +382,82 @@ describe('auth.test', () => {
             message: 'invalid_age',
         });
         should(response.status).deepEqual(400);
+    });
+
+    it ('null age', async () => {
+        const response = await request(app)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                age: null,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_age',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('age less than min required', async () => {
+        const age = constants.MIN_USER_AGE_VALUE - 1;
+        const response = await request(app)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                age,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_age',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('age more than max required', async () => {
+        const age = constants.MAX_USER_AGE_VALUE + 1;
+        const response = await request(app)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                age,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_age',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('success', async () => {
+        const response = await request(app)
+            .post('/api/register')
+            .send({...t.validUser})
+            .expect(200);
+
+        should(response.body).deepEqual({
+            id: 1,
+            email: 'alex@gmail.com',
+            age: 22,
+            firstName: 'Alex',
+            lastName: 'Stepaniak',
+        });
+        should(response.status).deepEqual(200);
+    });
+
+    it('users exists', async () => {
+       const response = await request(app)
+           .post('/api/register')
+           .send({
+               ...t.validUser,
+           })
+           .expect(400);
+
+       should(response.body).deepEqual({
+           message: 'user_exists',
+       });
+       should(response.status).deepEqual(400);
     });
 });

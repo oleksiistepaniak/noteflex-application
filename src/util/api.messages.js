@@ -8,6 +8,8 @@ const apiMessages = {
     },
     REGISTRATION: {
         USER_ALREADY_EXISTS: "user_exists",
+        INVALID_EMAIL: "invalid_email",
+        INVALID_PASSWORD: "invalid_password",
     },
     AUTH_MIDDLEWARE: {
         TOKEN_NOT_PROVIDED: "token_not_provided",
@@ -38,8 +40,6 @@ const apiFunctionMessages = {
                 + ` Max length for description: ${constants.MAX_DESCRIPTION_LENGTH}`,
     },
     USER_REGISTER: {
-        INVALID_EMAIL:
-            (email) => `Invalid email: ${email}`,
         INVALID_PASSWORD:
             (password) => `Invalid password: ${password}`
                 + `. Password must include at least one uppercase letter`

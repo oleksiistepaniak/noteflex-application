@@ -6,7 +6,6 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended: true}))
 
-
 require("./routes/task.routes")(app);
 require("./routes/auth.routes")(app);
 

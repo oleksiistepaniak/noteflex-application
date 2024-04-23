@@ -8,7 +8,7 @@ exports.create = async (request, response) => {
     const { userId } = request.user;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body) {
+    if (Object.keys(request.body).length === 0) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });
@@ -33,9 +33,7 @@ exports.create = async (request, response) => {
 
     try {
         const task = await taskService.createTask(params);
-        response.status(200).send({
-            task,
-        });
+        response.status(200).send(task);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -169,9 +167,7 @@ exports.updateById = async (request, response) => {
 
     try {
         const task = await taskService.updateTaskById({id, userId, title, description, isCompleted});
-        response.status(200).send({
-            task,
-        });
+        response.status(200).send(task);
     } catch (error) {
         if (error.message) {
             response.status(400).send({

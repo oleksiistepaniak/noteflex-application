@@ -74,7 +74,7 @@ function isEmailValid(input)
 {
     if (!constants.EMAIL_REGEXP.test(input))
     {
-        throw Error(messages.apiFunctionMessages.USER_REGISTER.INVALID_EMAIL(input));
+        throw Error(messages.apiMessages.REGISTRATION.INVALID_EMAIL);
     }
 }
 
@@ -82,7 +82,7 @@ function isPasswordValid(input)
 {
     if (!constants.PASSWORD_REGEXP.test(input))
     {
-        throw Error(messages.apiFunctionMessages.USER_REGISTER.INVALID_PASSWORD(input));
+        throw Error(messages.apiMessages.REGISTRATION.INVALID_PASSWORD);
     }
 }
 

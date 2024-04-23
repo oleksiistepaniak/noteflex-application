@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require('bcryptjs');
 
 let app;
 let server;
@@ -10,6 +11,11 @@ const validUser = {
     firstName: 'Alex',
     lastName: 'Stepaniak',
     age: 22,
+};
+
+const validCredentialsForLogin = {
+    email: 'alex@gmail.com',
+    password: 'alexALEX228',
 };
 
 function init() {
@@ -39,8 +45,9 @@ function dispose() {
 }
 
 async function setValidUser() {
+    const hashedPassword = await bcrypt.hash(validUser.password, 10);
     await db.executeSqlScript(`INSERT INTO users (email, password, age, firstName, lastName)
-    VALUES (?, ?, ?, ?, ?);`, [validUser.email, validUser.password, validUser.age, validUser.firstName, validUser.lastName]);
+    VALUES (?, ?, ?, ?, ?);`, [validUser.email, hashedPassword, validUser.age, validUser.firstName, validUser.lastName]);
 }
 
 async function initDb() {
@@ -56,6 +63,7 @@ module.exports = {
     init,
     dispose,
     validUser,
+    validCredentialsForLogin,
     clearDb,
     initDb,
     setValidUser,

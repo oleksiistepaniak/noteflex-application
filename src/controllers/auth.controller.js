@@ -50,7 +50,7 @@ exports.login = async (request, response) => {
     const { email, password } = request.body;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body) {
+    if (Object.keys(request.body).length === 0) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });

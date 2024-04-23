@@ -292,4 +292,66 @@ describe('auth.test', () => {
         });
         should(response.status).deepEqual(400);
     });
+
+    it('empty lastName', async () => {
+        const response = await request(application)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                lastName: '',
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('null lastName', async () => {
+        const response = await request(application)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                firstName: null,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('lastName less than min required symbols', async () => {
+        const lastName = 'a'.repeat(constants.MIN_NAME_LENGTH - 1);
+        const response = await request(application)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                lastName,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
+
+    it('lastName more than max required symbols', async () => {
+        const lastName = 'a'.repeat(constants.MAX_NAME_LENGTH + 1);
+        const response = await request(application)
+            .post('/api/register')
+            .send({
+                ...t.validUser,
+                lastName,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'invalid_credentials',
+        });
+        should(response.status).deepEqual(400);
+    });
 });

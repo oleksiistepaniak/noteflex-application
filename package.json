@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "nodemon ./src/app.js",
-    "debug": "nodemon --inspect=127.0.0.1:3000 ./src/app.js"
+    "debug": "nodemon --inspect=127.0.0.1:3000 ./src/app.js",
+    "test": "mocha --recursive test"
   },
   "keywords": [],
   "author": "",

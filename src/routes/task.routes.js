@@ -11,7 +11,6 @@ module.exports = app => {
     router.get("/active", notes.findAllActive);
     router.get("/:id", notes.findOneById);
     router.put("/:id", notes.updateById);
-    router.patch("/makeCompleted/:id", notes.makeCompleted);
     router.delete("/:id", notes.removeById);
 
     app.use("/api/tasks", router);

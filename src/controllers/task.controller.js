@@ -196,37 +196,6 @@ exports.updateById = async (request, response) => {
     }
 }
 
-exports.makeCompleted = async (request, response) => {
-    const id = request.params.id;
-    const { userId } = request.user;
-    const { isCompleted } = request.body;
-
-    // VALIDATING IDENTIFIER - IS NUMBER
-    try {
-        util.isNumber(id);
-    } catch (error) {
-        response.status(400).send({
-            message: error.message,
-        });
-        return;
-    }
-
-    try {
-        const task = await taskService.makeTaskCompletedOrActiveById({ id, userId, isCompleted });
-        response.status(200).send(task);
-    } catch (error) {
-        if (error.message) {
-            response.status(400).send({
-                message: error.message,
-            });
-        } else {
-            response.status(500).send({
-                message: apiMessages.INTERNAL_SERVER_ERROR,
-            });
-        }
-    }
-}
-
 exports.removeById = async (request, response) => {
     const { id } = request.params;
     const { userId } = request.user;

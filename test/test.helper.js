@@ -14,6 +14,24 @@ const validUser = {
     age: 22,
 };
 
+const validTasks = [
+    {
+        title: 'English Homework',
+        description: 'Exercise 2 Page 132',
+        isCompleted: false,
+    },
+    {
+        title: 'Math Homework',
+        description: 'Exercise 2, 3 Page 12',
+        isCompleted: true,
+    },
+    {
+        title: 'Walking with Tom',
+        description: 'tomorrow at 8 o\'clock',
+        isCompleted: true,
+    },
+]
+
 const validTask = {
     title: 'English Homework',
     description: 'Exercise 2 Page 132',
@@ -69,6 +87,13 @@ async function setValidTask() {
     VALUES (?, ?, ?, ?);`, [validTask.title, validTask.description, validTask.isCompleted, 1]);
 }
 
+async function setValidTasks() {
+    for (const it of validTasks) {
+        await db.executeSqlScript(`INSERT INTO tasks (title, description, isCompleted, userId)
+    VALUES (?, ?, ?, ?);`, [it.title, it.description, it.isCompleted, 1]);
+    }
+}
+
 async function initDb() {
     await db.initializeDatabase();
 }
@@ -84,9 +109,11 @@ module.exports = {
     validUser,
     validCredentialsForLogin,
     validTask,
+    validTasks,
     clearDb,
     initDb,
     setValidUser,
     setValidTask,
+    setValidTasks,
     getValidToken,
 }

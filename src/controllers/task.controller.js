@@ -78,7 +78,12 @@ exports.findAllCompleted = async (request, response) => {
     const { title } = request.query;
     try {
         const tasks = await taskService.findAllCompletedTasks({ userId, title, isCompleted: true });
-        response.status(200).send(tasks);
+        response.status(200).send(tasks.map(it => {
+            return {
+                ...it,
+                isCompleted: Boolean(it.isCompleted),
+            }
+        }));
     } catch (error) {
         if (error.message) {
             response.status(400).send({

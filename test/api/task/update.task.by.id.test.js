@@ -42,6 +42,21 @@ describe('update.task.by.id.test', () => {
         should(response.status).deepEqual(401);
     });
 
+    it('id is not a number', async () => {
+        const response = await request(app)
+            .put('/api/tasks/true')
+            .set('Authorization', token)
+            .send({
+                title: true,
+            })
+            .expect(400);
+
+        should(response.body).deepEqual({
+            message: 'task_id_not_number',
+        });
+        should(response.status).deepEqual(400);
+    });
+
     it('empty request body', async () => {
         const response = await request(app)
             .put('/api/tasks/1')

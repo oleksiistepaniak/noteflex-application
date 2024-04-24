@@ -168,7 +168,7 @@ exports.updateById = async (request, response) => {
 
     // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
     try {
-        util.isNumber(id);
+        util.isNumber(id, apiMessages.TASK.TASK_ID_NOT_NUMBER);
         util.isOptionalString(title, apiMessages.TASK.TITLE_NOT_STRING);
         util.isOptionalTitleValid(title);
         util.isOptionalString(description, apiMessages.TASK.DESCRIPTION_NOT_STRING);

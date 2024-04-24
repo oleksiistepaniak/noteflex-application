@@ -7,14 +7,14 @@ describe('update.task.by.id.test', () => {
     let app;
     let token
 
-    before(async () => {
+    beforeEach(async () => {
         app = t.init();
         await t.initDb();
         await t.setValidUsers();
         token = await t.getValidToken();
     });
 
-    after(async () => {
+    afterEach(async () => {
         t.dispose();
         await t.clearDb();
     });
@@ -167,5 +167,100 @@ describe('update.task.by.id.test', () => {
             message: 'task_is_not_owned',
         });
         should(response.status).deepEqual(400);
+    });
+
+    it('success with only title', async () => {
+        await t.setValidTasks();
+        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
+        const response = await request(app)
+            .put('/api/tasks/1')
+            .set('Authorization', token)
+            .send({title})
+            .expect(200);
+
+        should(response.body).deepEqual({
+            ...t.validTasks[0],
+            id: 1,
+            userId: 1,
+            title,
+        });
+        should(response.status).deepEqual(200);
+    });
+
+    it('success with only description', async () => {
+        await t.setValidTasks();
+       const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+       const response = await request(app)
+           .put('/api/tasks/1')
+           .set('Authorization', token)
+           .send({description})
+           .expect(200);
+
+       should(response.body).deepEqual({
+           ...t.validTasks[0],
+           id: 1,
+           userId: 1,
+           description,
+       });
+       should(response.status).deepEqual(200);
+    });
+
+    it('success with only isCompleted', async () => {
+       await t.setValidTasks();
+       const isCompleted = true;
+       const response = await request(app)
+           .put('/api/tasks/1')
+           .set('Authorization', token)
+           .send({isCompleted})
+           .expect(200);
+
+       should(response.body).deepEqual({
+           ...t.validTasks[0],
+           id: 1,
+           userId: 1,
+           isCompleted,
+       });
+       should(response.status).deepEqual(200);
+    });
+
+    it('success with title and description', async () => {
+        await t.setValidTasks();
+        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
+        const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+        const response = await request(app)
+            .put('/api/tasks/1')
+            .set('Authorization', token)
+            .send({title, description})
+            .expect(200);
+
+        should(response.body).deepEqual({
+            ...t.validTasks[0],
+            id: 1,
+            userId: 1,
+            title,
+            description,
+        });
+
+        should(response.status).deepEqual(200);
+    });
+
+    it('success with all fields', async () => {
+        await t.setValidTasks();
+        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
+        const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+        const isCompleted = true;
+        const response = await request(app)
+           .put('/api/tasks/1')
+           .set('Authorization', token)
+           .send({title, description, isCompleted})
+           .expect(200);
+
+        should(response.body).deepEqual({
+           userId: 1,
+           id: 1,
+           title, description, isCompleted,
+       });
+
+        should(response.status).deepEqual(200);
     });
 });

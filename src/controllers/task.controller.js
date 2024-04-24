@@ -182,7 +182,7 @@ exports.updateById = async (request, response) => {
 
     try {
         const task = await taskService.updateTaskById({id, userId, title, description, isCompleted});
-        response.status(200).send(task);
+        response.status(200).send({...task, isCompleted: Boolean(task.isCompleted)});
     } catch (error) {
         if (error.message) {
             response.status(400).send({

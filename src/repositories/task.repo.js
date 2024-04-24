@@ -65,7 +65,7 @@ function updateTaskById(params) {
 
 function deleteTaskById(params) {
     return new Promise((resolve, reject) => {
-        const query = `DELETE FROM notes WHERE id = ${params.id} AND userId = ${params.userId}`;
+        const query = `DELETE FROM tasks WHERE id = ${params.id} AND userId = ${params.userId}`;
         database.sql.query(query, (error, results) => {
             if (error) {
                 reject(error);

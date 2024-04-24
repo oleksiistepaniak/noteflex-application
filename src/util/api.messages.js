@@ -24,6 +24,7 @@ const apiMessages = {
         DESCRIPTION_NOT_STRING: 'description_not_string',
         INVALID_DESCRIPTION_LENGTH: 'invalid_description_length',
         TASK_NOT_FOUND: 'task_not_found',
+        TASK_ID_NOT_NUMBER: 'task_id_not_number',
     },
 };
 

@@ -18,13 +18,13 @@ function isOptionalString(input, message)
     }
 }
 
-function isNumber(input)
+function isNumber(input, message)
 {
     const number = parseInt(input);
 
     if (isNaN(number))
     {
-        throw Error(messages.apiFunctionMessages.VALUE_IS_NOT_NUMBER(input));
+        throw Error(message);
     }
 }
 

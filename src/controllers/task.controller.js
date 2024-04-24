@@ -202,7 +202,7 @@ exports.removeById = async (request, response) => {
 
     // VALIDATING IDENTIFIER - IS NUMBER
     try {
-        util.isNumber(id);
+        util.isNumber(id, apiMessages.TASK.TASK_ID_NOT_NUMBER);
     } catch (error) {
         response.status(400).send({
             message: error.message,
@@ -212,7 +212,7 @@ exports.removeById = async (request, response) => {
 
     try {
         const task = await taskService.deleteTaskById({ id, userId });
-        response.status(200).send(task);
+        response.status(200).send({...task, isCompleted: Boolean(task.isCompleted)});
     } catch (error) {
         if (error.message) {
             response.status(400).send({

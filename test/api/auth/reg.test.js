@@ -37,7 +37,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_email',
+            message: 'email_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -52,7 +52,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_email',
+            message: 'email_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -82,7 +82,7 @@ describe('reg.test', () => {
            .expect(400);
 
        should(response.body).deepEqual({
-           message: 'invalid_password'
+           message: 'password_not_string',
        });
        should(response.status).deepEqual(400);
     });
@@ -97,7 +97,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_password'
+            message: 'password_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -240,7 +240,7 @@ describe('reg.test', () => {
            .expect(400);
 
        should(response.body).deepEqual({
-           message: 'invalid_credentials',
+           message: 'first_name_not_string',
        });
        should(response.status).deepEqual(400);
     });
@@ -255,7 +255,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_credentials',
+            message: 'first_name_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -302,7 +302,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_credentials',
+            message: 'last_name_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -317,7 +317,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_credentials',
+            message: 'first_name_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -332,7 +332,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_credentials',
+            message: 'first_name_not_string',
         });
         should(response.status).deepEqual(400);
     });
@@ -379,7 +379,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_age',
+            message: 'age_not_number',
         });
         should(response.status).deepEqual(400);
     });
@@ -394,7 +394,7 @@ describe('reg.test', () => {
             .expect(400);
 
         should(response.body).deepEqual({
-            message: 'invalid_age',
+            message: 'age_not_number',
         });
         should(response.status).deepEqual(400);
     });

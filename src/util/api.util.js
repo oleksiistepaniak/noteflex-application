@@ -74,7 +74,7 @@ function isEmailValid(input)
 {
     if (!constants.EMAIL_REGEXP.test(input))
     {
-        throw Error(messages.apiMessages.REGISTRATION.INVALID_EMAIL);
+        throw Error(messages.apiMessages.USER.INVALID_EMAIL);
     }
 }
 
@@ -82,7 +82,7 @@ function isPasswordValid(input)
 {
     if (!constants.PASSWORD_REGEXP.test(input))
     {
-        throw Error(messages.apiMessages.REGISTRATION.INVALID_PASSWORD);
+        throw Error(messages.apiMessages.USER.INVALID_PASSWORD);
     }
 }
 
@@ -91,7 +91,7 @@ function isFirstnameOrLastnameValid(input)
     if (typeof input !== 'string'
         || input.length < constants.MIN_NAME_LENGTH || input.length > constants.MAX_NAME_LENGTH)
     {
-        throw Error(messages.apiMessages.REGISTRATION.INVALID_CREDENTIALS);
+        throw Error(messages.apiMessages.USER.INVALID_CREDENTIALS);
     }
 }
 
@@ -99,7 +99,7 @@ function isUserAgeValid(input)
 {
     if (typeof input !== 'number' || input < constants.MIN_USER_AGE_VALUE || input > constants.MAX_USER_AGE_VALUE)
     {
-        throw Error(messages.apiMessages.REGISTRATION.INVALID_AGE);
+        throw Error(messages.apiMessages.USER.INVALID_AGE);
     }
 }
 

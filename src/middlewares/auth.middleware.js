@@ -8,7 +8,7 @@ const authMiddleware = (req, resp, next) => {
 
     if (!token) {
         return resp.status(401).send({
-            message: apiMessages.AUTH_MIDDLEWARE.TOKEN_NOT_PROVIDED,
+            message: apiMessages.USER.TOKEN_NOT_PROVIDED,
         });
     }
 
@@ -19,7 +19,7 @@ const authMiddleware = (req, resp, next) => {
         next();
     } catch (error) {
         return resp.status(401).send({
-            message: apiMessages.AUTH_MIDDLEWARE.INVALID_TOKEN,
+            message: apiMessages.USER.INVALID_TOKEN,
         });
     }
 }

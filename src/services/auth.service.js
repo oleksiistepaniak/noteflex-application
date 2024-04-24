@@ -9,7 +9,7 @@ const userDtoMapper = require('../dto/user.dto.mapper');
 async function signup(params) {
     const existingUser = await userRepository.findUserByEmail(params.email);
     if (existingUser) {
-        throw new Error(messages.apiMessages.REGISTRATION.USER_ALREADY_EXISTS);
+        throw new Error(messages.apiMessages.USER.USER_ALREADY_EXISTS);
     }
 
     const hashedPassword = await bcrypt.hash(params.password, parseInt(process.env.SALT));
@@ -35,12 +35,12 @@ async function authenticate(params) {
     const user = await userRepository.findUserByEmail(params.email);
 
     if (!user) {
-        throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
+        throw new Error(messages.apiMessages.USER.INVALID_PASSWORD_OR_EMAIL);
     }
 
     const isPasswordMatch = await bcrypt.compare(params.password, user.password);
     if (!isPasswordMatch) {
-        throw new Error(messages.apiMessages.AUTHENTICATION.INVALID_PASSWORD_OR_EMAIL);
+        throw new Error(messages.apiMessages.USER.INVALID_PASSWORD_OR_EMAIL);
     }
 
     const token = jwt.sign({userId: user.id}, process.env.SECRET_KEY, {expiresIn: "1d"});

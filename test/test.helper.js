@@ -64,6 +64,11 @@ async function setValidUser() {
     VALUES (?, ?, ?, ?, ?);`, [validUser.email, hashedPassword, validUser.age, validUser.firstName, validUser.lastName]);
 }
 
+async function setValidTask() {
+    await db.executeSqlScript(`INSERT INTO tasks (title, description, isCompleted, userId)
+    VALUES (?, ?, ?, ?);`, [validTask.title, validTask.description, validTask.isCompleted, 1]);
+}
+
 async function initDb() {
     await db.initializeDatabase();
 }
@@ -82,5 +87,6 @@ module.exports = {
     clearDb,
     initDb,
     setValidUser,
+    setValidTask,
     getValidToken,
 }

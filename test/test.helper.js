@@ -6,6 +6,23 @@ let app;
 let server;
 let db;
 
+const validUsers = [
+    {
+        email: 'alex@gmail.com',
+        password: 'alexALEX228',
+        firstName: 'Alex',
+        lastName: 'Stepaniak',
+        age: 22,
+    },
+    {
+        email: 'bob@gmail.com',
+        password: 'bobBOB228',
+        firstName: 'Bob',
+        lastName: 'Bobson',
+        age: 30,
+    },
+]
+
 const validUser = {
     email: 'alex@gmail.com',
     password: 'alexALEX228',
@@ -82,6 +99,14 @@ async function setValidUser() {
     VALUES (?, ?, ?, ?, ?);`, [validUser.email, hashedPassword, validUser.age, validUser.firstName, validUser.lastName]);
 }
 
+async function setValidUsers() {
+    for (const it of validUsers) {
+        const hashedPassword = await bcrypt.hash(it.password, parseInt(process.env.SALT));
+        await db.executeSqlScript(`INSERT INTO users (email, password, age, firstName, lastName)
+    VALUES (?, ?, ?, ?, ?);`, [it.email, hashedPassword, it.age, it.firstName, it.lastName]);
+    }
+}
+
 async function setValidTask() {
     await db.executeSqlScript(`INSERT INTO tasks (title, description, isCompleted, userId)
     VALUES (?, ?, ?, ?);`, [validTask.title, validTask.description, validTask.isCompleted, 1]);
@@ -107,12 +132,14 @@ module.exports = {
     init,
     dispose,
     validUser,
+    validUsers,
     validCredentialsForLogin,
     validTask,
     validTasks,
     clearDb,
     initDb,
     setValidUser,
+    setValidUsers,
     setValidTask,
     setValidTasks,
     getValidToken,

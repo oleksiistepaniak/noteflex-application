@@ -5,16 +5,16 @@ const constants = require("../constants");
 
 function isString(input, message)
 {
-    if (typeof input !== "string")
+    if (typeof input !== "string" || input.length === 0)
     {
         throw Error(message);
     }
 }
 
-function isOptionalString(input)
+function isOptionalString(input, message)
 {
-    if (input) {
-        isString(input);
+    if (input || typeof input === 'string') {
+        isString(input, message);
     }
 }
 

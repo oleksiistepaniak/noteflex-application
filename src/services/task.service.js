@@ -51,7 +51,7 @@ async function findTaskById(params) {
 async function updateTaskById(params) {
     const tasks = await taskRepository.findTaskById(params);
 
-    util.apiCheck(!(tasks.length === 0), apiMessages.UPDATE_TASK_BY_ID.TASK_IS_NOT_OWNED);
+    util.apiCheck(!(tasks.length === 0), apiMessages.TASK.TASK_IS_NOT_OWNED);
 
     await taskRepository.updateTaskById({
         ...params,
@@ -70,7 +70,7 @@ async function updateTaskById(params) {
 async function makeTaskCompletedOrActiveById(params) {
     const tasks = await taskRepository.findTaskById(params);
 
-    util.apiCheck(!(tasks.length === 0), apiMessages.MAKE_TASK_COMPLETED.TASK_IS_NOT_OWNED);
+    util.apiCheck(!(tasks.length === 0), apiMessages.TASK.TASK_IS_NOT_OWNED);
 
     await updateTaskById(params);
     return {
@@ -82,7 +82,7 @@ async function makeTaskCompletedOrActiveById(params) {
 async function deleteTaskById(params) {
     const tasks = await taskRepository.findTaskById(params);
 
-    util.apiCheck(!(tasks.length === 0), apiMessages.REMOVE_TASK_BY_ID.TASK_IS_NOW_OWNED);
+    util.apiCheck(!(tasks.length === 0), apiMessages.TASK.TASK_IS_NOT_OWNED);
 
     await taskRepository.deleteTaskById(params);
 

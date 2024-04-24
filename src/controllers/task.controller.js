@@ -159,7 +159,7 @@ exports.updateById = async (request, response) => {
     const { userId } = request.user;
 
     // VALIDATING REQUEST BODY - IS NOT EMPTY
-    if (!request.body) {
+    if (Object.keys(request.body).length === 0) {
         response.status(400).send({
             message: messages.apiMessages.EMPTY_REQUEST_BODY,
         });
@@ -169,9 +169,9 @@ exports.updateById = async (request, response) => {
     // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
     try {
         util.isNumber(id);
-        util.isOptionalString(title);
+        util.isOptionalString(title, apiMessages.TASK.TITLE_NOT_STRING);
         util.isOptionalTitleValid(title);
-        util.isOptionalString(description);
+        util.isOptionalString(description, apiMessages.TASK.DESCRIPTION_NOT_STRING);
         util.isOptionalDescriptionValid(description);
     } catch (error) {
         response.status(400).send({

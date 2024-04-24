@@ -8,6 +8,7 @@ const userDtoMapper = require('../dto/user.dto.mapper');
 // params consist of params.email, params.password, params.age, params.firstName, params.lastName
 async function signup(params) {
     const existingUser = await userRepository.findUserByEmail(params.email);
+
     if (existingUser) {
         throw new Error(messages.apiMessages.USER.USER_ALREADY_EXISTS);
     }
@@ -39,6 +40,7 @@ async function authenticate(params) {
     }
 
     const isPasswordMatch = await bcrypt.compare(params.password, user.password);
+
     if (!isPasswordMatch) {
         throw new Error(messages.apiMessages.USER.INVALID_PASSWORD_OR_EMAIL);
     }

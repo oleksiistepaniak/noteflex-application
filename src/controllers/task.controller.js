@@ -103,7 +103,12 @@ exports.findAllActive = async (request, response) => {
 
     try {
         const tasks = await taskService.findAllActiveTasks({userId, title, isActive: true});
-        response.status(200).send(tasks);
+        response.status(200).send(tasks.map(it => {
+            return {
+                ...it,
+                isCompleted: Boolean(it.isCompleted),
+            }
+        }));
     } catch (error) {
         if (error.message) {
             response.status(400).send({

@@ -2,7 +2,7 @@ const t = require("../../test.helper");
 const request = require('supertest');
 const should = require('should');
 
-describe('find.all.completed.tasks.test', () => {
+describe('find.all.active.tasks.test', () => {
     let app;
     let token
 

@@ -23,6 +23,7 @@ const apiMessages = {
         TASK_IS_NOT_OWNED: 'task_is_not_owned',
         DESCRIPTION_NOT_STRING: 'description_not_string',
         INVALID_DESCRIPTION_LENGTH: 'invalid_description_length',
+        TASK_NOT_FOUND: 'task_not_found',
     },
 };
 

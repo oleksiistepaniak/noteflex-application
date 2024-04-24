@@ -138,7 +138,7 @@ exports.findOneById = async (request, response) => {
 
     try {
         const task = await taskService.findTaskById({ userId, id });
-        response.status(200).send(task);
+        response.status(200).send({...task, isCompleted: Boolean(task.isCompleted)});
     } catch (error) {
         if (error.message) {
             response.status(400).send({

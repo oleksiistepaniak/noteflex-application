@@ -3,6 +3,7 @@ const taskRepository = require('../repositories/task.repo');
 const taskDtoMapper = require('../dto/task.dto.mapper');
 const util = require('../util/api.util');
 const {apiMessages} = require("../util/api.messages");
+const {apiCheck} = require("../util/api.util");
 
 // params consist of params.userId, params.title, params.description, params.isCompleted
 async function createTask(params) {
@@ -41,7 +42,8 @@ async function findAllActiveTasks(params) {
 // params consist of required values params.userId and params.id (which is task id)
 async function findTaskById(params) {
     const result = await taskRepository.findTaskById(params);
-    return result;
+    apiCheck(!(result.length === 0), apiMessages.TASK.TASK_NOT_FOUND);
+    return result[0];
 }
 
 // params consist of required values params.userId, params.id (which is task id)

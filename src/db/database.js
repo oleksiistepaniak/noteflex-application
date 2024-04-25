@@ -31,11 +31,13 @@ function executeSqlScript(sqlScript, array) {
 
 const createUsersTableSql = fs.readFileSync('./src/db/create_users_table.sql', 'utf8');
 const createTasksTableSql = fs.readFileSync('./src/db/create_tasks_table.sql', 'utf8');
+const createNotesTableSql = fs.readFileSync('./src/db/create_notes_table.sql', 'utf8');
 
 async function initializeDatabase() {
     try {
         await executeSqlScript(createUsersTableSql);
         await executeSqlScript(createTasksTableSql);
+        await executeSqlScript(createNotesTableSql);
         console.log('Database initialized successfully!');
     } catch (error) {
         console.error('Error during initializing database: ', error);

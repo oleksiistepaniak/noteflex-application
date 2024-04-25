@@ -1,5 +1,4 @@
-const Task = function (newTask)
-{
+const Task = function (newTask) {
     this.title = newTask.title;
     this.description = newTask.description;
     this.isCompleted = newTask.isCompleted;

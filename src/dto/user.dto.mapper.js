@@ -1,7 +1,7 @@
 // params consist of params.id, and params.user which is nested object with properties
 // user.email, user.password, user.age, user.firstName, user.lastName
 // user.password must be ignored for security
-function mapUserToDto(params) {
+function mapCreatedUserToDto(params) {
     const dto = {
         id: params.id,
         email: params.user.email,
@@ -13,5 +13,5 @@ function mapUserToDto(params) {
 }
 
 module.exports = {
-    mapUserToDto,
+    mapCreatedUserToDto,
 }

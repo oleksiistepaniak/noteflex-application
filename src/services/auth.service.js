@@ -25,7 +25,7 @@ async function signup(params) {
     });
 
     const result = await userRepository.createUser(user);
-    return userDtoMapper.mapUserToDto({
+    return userDtoMapper.mapCreatedUserToDto({
         id: result.insertId,
         user,
     });

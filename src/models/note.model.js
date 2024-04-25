@@ -1,5 +1,7 @@
 const Note = function (newNote) {
     this.title = newNote.title;
-    this.description = newNote.description;
+    this.text = newNote.text;
     this.userId = newNote.userId;
 }
+
+module.exports = Note;

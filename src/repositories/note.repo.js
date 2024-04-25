@@ -12,3 +12,7 @@ function createNote(newNote) {
         })
     });
 }
+
+module.exports = {
+    createNote,
+}

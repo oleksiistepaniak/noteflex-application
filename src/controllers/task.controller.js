@@ -54,12 +54,7 @@ exports.findAll = async (request, response) => {
 
     try {
         const tasks = await taskService.findAllTasks({ title, userId });
-        response.status(200).send(tasks.map(it => {
-           return {
-               ...it,
-               isCompleted: Boolean(it.isCompleted),
-           }
-        }));
+        response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -78,12 +73,7 @@ exports.findAllCompleted = async (request, response) => {
     const { title } = request.query;
     try {
         const tasks = await taskService.findAllCompletedTasks({ userId, title, isCompleted: true });
-        response.status(200).send(tasks.map(it => {
-            return {
-                ...it,
-                isCompleted: Boolean(it.isCompleted),
-            }
-        }));
+        response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -103,12 +93,7 @@ exports.findAllActive = async (request, response) => {
 
     try {
         const tasks = await taskService.findAllActiveTasks({userId, title, isActive: true});
-        response.status(200).send(tasks.map(it => {
-            return {
-                ...it,
-                isCompleted: Boolean(it.isCompleted),
-            }
-        }));
+        response.status(200).send(tasks);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -182,7 +167,7 @@ exports.updateById = async (request, response) => {
 
     try {
         const task = await taskService.updateTaskById({id, userId, title, description, isCompleted});
-        response.status(200).send({...task, isCompleted: Boolean(task.isCompleted)});
+        response.status(200).send(task);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -212,7 +197,7 @@ exports.removeById = async (request, response) => {
 
     try {
         const task = await taskService.deleteTaskById({ id, userId });
-        response.status(200).send({...task, isCompleted: Boolean(task.isCompleted)});
+        response.status(200).send(task);
     } catch (error) {
         if (error.message) {
             response.status(400).send({

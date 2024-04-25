@@ -15,7 +15,7 @@ async function createTask(params) {
     });
 
     const result = await taskRepository.createTask(task);
-    return taskDtoMapper.mapTaskToDto({
+    return taskDtoMapper.mapCreatedTaskToDto({
         id: result.insertId,
         task,
     });
@@ -23,31 +23,31 @@ async function createTask(params) {
 
 // params consist of optional value params.title and required value params.userId
 async function findAllTasks(params) {
-    const result = await taskRepository.findAllTasks(params);
-    return result;
+    const tasks = await taskRepository.findAllTasks(params);
+    return tasks.map(it => taskDtoMapper.mapTaskToDto(it));
 }
 
 // params consist of optional value params.title and required values params.isCompleted to TRUE and params.userId
 async function findAllCompletedTasks(params) {
-    const result = await taskRepository.findAllTasks(params);
-    return result;
+    const tasks = await taskRepository.findAllTasks(params);
+    return tasks.map(it => taskDtoMapper.mapTaskToDto(it));
 }
 
 // params consist of optional value params.title and required values params.isActive to TRUE and params.userId
 async function findAllActiveTasks(params) {
-    const result = await taskRepository.findAllTasks(params);
-    return result;
+    const tasks = await taskRepository.findAllTasks(params);
+    return tasks.map(it => taskDtoMapper.mapTaskToDto(it));
 }
 
 // params consist of required values params.userId and params.id (which is task id)
 async function findTaskById(params) {
-    const result = await taskRepository.findTaskById(params);
-    apiCheck(!(result.length === 0), apiMessages.TASK.TASK_NOT_FOUND);
-    return result[0];
+    const tasks = await taskRepository.findTaskById(params);
+    apiCheck(!(tasks.length === 0), apiMessages.TASK.TASK_NOT_FOUND);
+    return taskDtoMapper.mapTaskToDto(tasks[0]);
 }
 
 // params consist of required values params.userId, params.id (which is task id)
-// , params.title and params.description
+// , params.title, params.description and params.isCompleted which are optional parameters
 async function updateTaskById(params) {
     const tasks = await taskRepository.findTaskById(params);
 
@@ -59,14 +59,15 @@ async function updateTaskById(params) {
         description: params.description ?? tasks[0].description,
         isCompleted: params.isCompleted ?? tasks[0].isCompleted,
     });
-    return {
+    return taskDtoMapper.mapTaskToDto({
         ...tasks[0],
         title: params.title ?? tasks[0].title,
         description: params.description ?? tasks[0].description,
         isCompleted: params.isCompleted ?? tasks[0].isCompleted,
-    };
+    });
 }
 
+// params consist of required values params.userId and params.id (which is task id)
 async function deleteTaskById(params) {
     const tasks = await taskRepository.findTaskById(params);
 
@@ -74,9 +75,7 @@ async function deleteTaskById(params) {
 
     await taskRepository.deleteTaskById(params);
 
-    return {
-        ...tasks[0],
-    }
+    return taskDtoMapper.mapTaskToDto(tasks[0]);
 }
 
 module.exports = {

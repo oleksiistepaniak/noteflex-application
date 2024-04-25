@@ -36,7 +36,7 @@ function apiCheck(condition, message) {
 
 //#endregion
 
-//#region NOTE_CREATING_UPDATING_VALIDATION
+//#region TASK_CREATING_UPDATING_VALIDATION
 
 function isTitleValid(input)
 {

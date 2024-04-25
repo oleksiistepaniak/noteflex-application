@@ -8,7 +8,11 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended: true}))
 
+console.log('--------------------------------------------------------------');
+console.log('SWAGGER SETTINGS: ')
 console.log(swaggerSpec);
+console.log('--------------------------------------------------------------');
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

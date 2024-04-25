@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS tasks (
   title VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
   isCompleted BOOLEAN NOT NULL,
-  userId INT,
+  userId INT NOT NULL,
   FOREIGN KEY (userId) REFERENCES users(id)
 );

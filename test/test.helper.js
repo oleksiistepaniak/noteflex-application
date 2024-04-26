@@ -104,7 +104,6 @@ function init() {
     require('../src/routes/note.routes')(app);
 
     server = app.listen(process.env.APP_PORT, async () => {
-        // await database.initializeDatabase();
         console.log(`Server has started its work successfully on port: ${process.env.APP_PORT}`);
     });
     return app;

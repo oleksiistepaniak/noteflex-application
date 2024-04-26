@@ -29,7 +29,21 @@ function findAllNotes(params) {
     });
 }
 
+function findNoteById(params) {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM notes WHERE userId = ${params.userId} AND id = ${params.id}`;
+        database.sql.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        })
+    });
+}
+
 module.exports = {
     createNote,
     findAllNotes,
+    findNoteById,
 }

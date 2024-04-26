@@ -7,6 +7,7 @@ module.exports = app => {
 
     router.post('/', notes.create);
     router.get('/', notes.findAll);
+    router.get('/:id', notes.findOneById);
 
     app.use('/api/notes', router);
 }

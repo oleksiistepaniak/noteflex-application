@@ -30,6 +30,7 @@ const apiMessages = {
         TEXT_NOT_STRING: 'text_not_string',
         INVALID_TITLE_LENGTH: 'invalid_title_length',
         INVALID_TEXT_LENGTH: 'invalid_text_length',
+        NOTE_NOT_FOUND: 'note_not_found',
     }
 };
 

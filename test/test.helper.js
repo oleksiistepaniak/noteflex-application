@@ -63,6 +63,28 @@ const validNote = {
     4. Buy a car`,
 };
 
+const validNotes = [
+    {
+        title: 'My goals',
+        text: `1. Receive an identifier
+        2. Move abroad
+        3. Buy a house
+        4. Buy a car`,
+    },
+    {
+        title: 'My passwords',
+        text: `1. LinkedIn: bobBOB228
+        2. Gmail: alexALEX228`,
+    },
+    {
+        title: 'My poem',
+        text: `In her eyes, the stars find their spark,
+        A universe within, shining bright in the dark.
+        Her laughter, a melody, sweet and clear,
+        Bringing joy and warmth, ever near.`,
+    },
+];
+
 const validCredentialsForLogin = {
     email: 'alex@gmail.com',
     password: 'alexALEX228',
@@ -133,6 +155,13 @@ async function setValidNote() {
         [validNote.title, validNote.text, 1]);
 }
 
+async function setValidNotes() {
+    for (const it of validNotes) {
+        await db.executeSqlScript(`INSERT INTO notes (title, text, userId) VALUES (?, ?, ?)`,
+            [it.title, it.text, 1]);
+    }
+}
+
 async function initDb() {
     await db.initializeDatabase();
 }
@@ -152,6 +181,7 @@ module.exports = {
     validTask,
     validTasks,
     validNote,
+    validNotes,
     clearDb,
     initDb,
     setValidUser,
@@ -160,4 +190,5 @@ module.exports = {
     setValidTasks,
     getValidToken,
     setValidNote,
+    setValidNotes,
 }

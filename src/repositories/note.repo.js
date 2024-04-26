@@ -42,8 +42,22 @@ function findNoteById(params) {
     });
 }
 
+function updateNoteById(params) {
+    return new Promise((resolve, reject) => {
+       const query = 'UPDATE notes SET title = ?, text = ? WHERE id = ? AND userId = ?';
+       database.sql.query(query, [params.title, params.text, params.id, params.userId], (error, results) => {
+           if (error) {
+               reject(error);
+           } else {
+               resolve(results);
+           }
+       })
+    });
+}
+
 module.exports = {
     createNote,
     findAllNotes,
     findNoteById,
+    updateNoteById,
 }

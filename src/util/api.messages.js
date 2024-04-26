@@ -31,6 +31,8 @@ const apiMessages = {
         INVALID_TITLE_LENGTH: 'invalid_title_length',
         INVALID_TEXT_LENGTH: 'invalid_text_length',
         NOTE_NOT_FOUND: 'note_not_found',
+        NOTE_IS_NOT_OWNED: 'note_is_not_owned',
+        NOTE_ID_NOT_NUMBER: 'note_id_not_number',
     }
 };
 

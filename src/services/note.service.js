@@ -32,8 +32,29 @@ async function findNoteById(params) {
     return noteDtoMapper.mapNoteToDto(notes[0]);
 }
 
+// params consist of required values params.userId, params.id (which is note id)
+// , params.title and params.text which are optional parameters
+async function updateNoteById(params) {
+    const notes = await noteRepository.findNoteById(params);
+
+    apiCheck(!(notes.length === 0), apiMessages.NOTE.NOTE_IS_NOT_OWNED);
+
+    await noteRepository.updateNoteById({
+        ...params,
+        title: params.title ?? notes[0].title,
+        text: params.text ?? notes[0].text,
+    });
+
+    return noteDtoMapper.mapNoteToDto({
+        ...notes[0],
+        title: params.title ?? notes[0].title,
+        text: params.text ?? notes[0].text,
+    });
+}
+
 module.exports = {
     createNote,
     findAllNotes,
     findNoteById,
+    updateNoteById,
 }

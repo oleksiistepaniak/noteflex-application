@@ -138,7 +138,7 @@ exports.findOneById = async (request, response) => {
     }
 }
 
-exports.updateById = async (request, response) => {
+exports.updateOneById = async (request, response) => {
 
     const { id } = request.params;
     const { title, description, isCompleted } = request.body;
@@ -182,7 +182,7 @@ exports.updateById = async (request, response) => {
     }
 }
 
-exports.removeById = async (request, response) => {
+exports.removeOneById = async (request, response) => {
     const { id } = request.params;
     const { userId } = request.user;
 

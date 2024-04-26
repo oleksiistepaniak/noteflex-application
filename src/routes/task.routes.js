@@ -51,8 +51,8 @@ module.exports = app => {
     router.get("/completed", tasks.findAllCompleted);
     router.get("/active", tasks.findAllActive);
     router.get("/:id", tasks.findOneById);
-    router.put("/:id", tasks.updateById);
-    router.delete("/:id", tasks.removeById);
+    router.put("/:id", tasks.updateOneById);
+    router.delete("/:id", tasks.removeOneById);
 
     app.use("/api/tasks", router);
 }

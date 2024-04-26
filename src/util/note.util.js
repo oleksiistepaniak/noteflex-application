@@ -7,13 +7,27 @@ function isTitleValid(input) {
     }
 }
 
+function isOptionalTitleValid(input) {
+    if (input) {
+        isTitleValid(input);
+    }
+}
+
 function isTextValid(input) {
     if (input.length < constants.NOTE.MIN_TEXT_LENGTH) {
         throw Error(messages.apiMessages.NOTE.INVALID_TEXT_LENGTH);
     }
 }
 
+function isOptionalTextValid(input) {
+    if (input) {
+        isTextValid(input);
+    }
+}
+
 module.exports = {
     isTitleValid,
+    isOptionalTitleValid,
     isTextValid,
+    isOptionalTextValid,
 }

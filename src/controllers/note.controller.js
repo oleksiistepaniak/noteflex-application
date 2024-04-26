@@ -53,8 +53,8 @@ exports.findAll = async (request, response) => {
     const { title } = request.query;
 
     try {
-        const tasks = await noteService.findAllNotes({ title, userId });
-        response.status(200).send(tasks);
+        const notes = await noteService.findAllNotes({ title, userId });
+        response.status(200).send(notes);
     } catch (error) {
         if (error.message) {
             response.status(400).send({
@@ -94,6 +94,50 @@ exports.findOneById = async (request, response) => {
             response.status(500).send({
                 message: messages.apiMessages.INTERNAL_SERVER_ERROR,
             })
+        }
+    }
+}
+
+exports.updateOneById = async (request, response) => {
+
+    const { id } = request.params;
+    const { title, text } = request.body;
+    const { userId } = request.user;
+
+    // VALIDATING REQUEST BODY - IS NOT EMPTY
+    if (Object.keys(request.body).length === 0) {
+        response.status(400).send({
+            message: messages.apiMessages.EMPTY_REQUEST_BODY,
+        });
+        return;
+    }
+
+    // VALIDATING IDENTIFIER AND REQUEST BODY FOR REQUIRED FIELDS
+    try {
+        util.isNumber(id, apiMessages.NOTE.NOTE_ID_NOT_NUMBER);
+        util.isOptionalString(title, apiMessages.NOTE.TITLE_NOT_STRING);
+        noteUtil.isOptionalTitleValid(title);
+        util.isOptionalString(text, apiMessages.NOTE.TEXT_NOT_STRING);
+        noteUtil.isOptionalTextValid(text);
+    } catch (error) {
+        response.status(400).send({
+            message: error.message,
+        });
+        return;
+    }
+
+    try {
+        const note = await noteService.updateNoteById({ id, userId, title, text });
+        response.status(200).send(note);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: apiMessages.INTERNAL_SERVER_ERROR,
+            });
         }
     }
 }

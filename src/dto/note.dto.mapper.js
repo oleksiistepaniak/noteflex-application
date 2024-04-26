@@ -10,6 +10,18 @@ function mapCreatedNoteToDto(params) {
     return dto;
 }
 
+// params consist of note.id, note.title, note.text and task.userId
+function mapNoteToDto(note) {
+    const dto = {
+        id: note.id,
+        title: note.title,
+        text: note.text,
+        userId: note.userId,
+    };
+    return dto;
+}
+
 module.exports = {
     mapCreatedNoteToDto,
+    mapNoteToDto,
 }

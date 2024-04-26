@@ -17,6 +17,13 @@ async function createNote(params) {
     });
 }
 
+// params consist of optional value params.title and required value params.userId
+async function findAllNotes(params) {
+    const notes = await noteRepository.findAllNotes(params);
+    return notes.map(it => noteDtoMapper.mapNoteToDto(it));
+}
+
 module.exports = {
     createNote,
+    findAllNotes,
 }

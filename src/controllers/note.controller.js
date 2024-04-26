@@ -2,6 +2,7 @@ const {apiMessages} = require("../util/api.messages");
 const util = require('../util/api.util');
 const noteUtil = require('../util/note.util');
 const noteService = require('../services/note.service');
+const messages = require("../util/api.messages");
 
 exports.create = async (request, response) => {
     const { title, text } = request.body;
@@ -45,4 +46,24 @@ exports.create = async (request, response) => {
         }
     }
 
+}
+
+exports.findAll = async (request, response) => {
+    const { userId } = request.user;
+    const { title } = request.query;
+
+    try {
+        const tasks = await noteService.findAllNotes({ title, userId });
+        response.status(200).send(tasks);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: messages.apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }

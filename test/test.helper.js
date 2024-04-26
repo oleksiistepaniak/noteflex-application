@@ -60,7 +60,7 @@ const validNote = {
     text: `1. Receive an identifier
     2. Move abroad
     3. Buy a house
-    4. Buy a car`
+    4. Buy a car`,
 };
 
 const validCredentialsForLogin = {
@@ -128,6 +128,11 @@ async function setValidTasks() {
     }
 }
 
+async function setValidNote() {
+    await db.executeSqlScript(`INSERT INTO notes (title, text, userId) VALUES (?, ?, ?)`,
+        [validNote.title, validNote.text, 1]);
+}
+
 async function initDb() {
     await db.initializeDatabase();
 }
@@ -154,4 +159,5 @@ module.exports = {
     setValidTask,
     setValidTasks,
     getValidToken,
+    setValidNote,
 }

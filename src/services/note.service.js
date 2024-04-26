@@ -52,9 +52,21 @@ async function updateNoteById(params) {
     });
 }
 
+// params consist of required values params.userId and params.id (which is note id)
+async function deleteNoteById(params) {
+    const notes = await noteRepository.findNoteById(params);
+
+    apiCheck(!(notes.length === 0), apiMessages.NOTE.NOTE_IS_NOT_OWNED);
+
+    await noteRepository.deleteNoteById(params);
+
+    return noteDtoMapper.mapNoteToDto(notes[0]);
+}
+
 module.exports = {
     createNote,
     findAllNotes,
     findNoteById,
     updateNoteById,
+    deleteNoteById,
 }

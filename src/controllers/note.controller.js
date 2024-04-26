@@ -141,3 +141,33 @@ exports.updateOneById = async (request, response) => {
         }
     }
 }
+
+exports.removeOneById = async (request, response) => {
+    const { id } = request.params;
+    const { userId } = request.user;
+
+    // VALIDATING IDENTIFIER - IS NUMBER
+    try {
+        util.isNumber(id, apiMessages.NOTE.NOTE_ID_NOT_NUMBER);
+    } catch (error) {
+        response.status(400).send({
+            message: error.message,
+        });
+        return;
+    }
+
+    try {
+        const note = await noteService.deleteNoteById({ id, userId });
+        response.status(200).send(note);
+    } catch (error) {
+        if (error.message) {
+            response.status(400).send({
+                message: error.message,
+            });
+        } else {
+            response.status(500).send({
+                message: apiMessages.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+}

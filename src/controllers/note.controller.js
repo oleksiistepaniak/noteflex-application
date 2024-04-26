@@ -25,6 +25,7 @@ exports.create = async (request, response) => {
         response.status(400).send({
             message: error.message,
         });
+        return;
     }
 
     const params = { title, text, userId };

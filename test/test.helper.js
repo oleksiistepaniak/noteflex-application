@@ -55,6 +55,14 @@ const validTask = {
     isCompleted: false,
 };
 
+const validNote = {
+    title: 'My goals',
+    text: `1. Receive an identifier
+    2. Move abroad
+    3. Buy a house
+    4. Buy a car`
+};
+
 const validCredentialsForLogin = {
     email: 'alex@gmail.com',
     password: 'alexALEX228',
@@ -138,6 +146,7 @@ module.exports = {
     validCredentialsForLogin,
     validTask,
     validTasks,
+    validNote,
     clearDb,
     initDb,
     setValidUser,

@@ -1,4 +1,5 @@
 const util = require('../util/api.util');
+const userUtil = require('../util/user.util');
 const messages = require('../util/api.messages');
 const authenticationService = require('../services/auth.service');
 const {apiMessages} = require("../util/api.messages");
@@ -17,15 +18,15 @@ exports.register = async (request, response) => {
     // VALIDATING REQUEST BODY REQUIRED PARAMS
     try {
         util.isString(email, apiMessages.USER.EMAIL_NOT_STRING);
-        util.isEmailValid(email);
+        userUtil.isEmailValid(email);
         util.isString(password, apiMessages.USER.PASSWORD_NOT_STRING);
-        util.isPasswordValid(password);
+        userUtil.isPasswordValid(password);
         util.isString(firstName, apiMessages.USER.FIRSTNAME_NOT_STRING);
         util.isString(lastName, apiMessages.USER.LASTNAME_NOT_STRING);
-        util.isFirstnameOrLastnameValid(firstName);
-        util.isFirstnameOrLastnameValid(lastName);
+        userUtil.isFirstnameOrLastnameValid(firstName);
+        userUtil.isFirstnameOrLastnameValid(lastName);
         util.isNumber(age, apiMessages.USER.AGE_NOT_NUMBER);
-        util.isUserAgeValid(age);
+        userUtil.isAgeValid(age);
     } catch (error) {
         response.status(400).send({
             message: error.message,

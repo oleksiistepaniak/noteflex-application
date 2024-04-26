@@ -103,7 +103,7 @@ describe('reg.test', () => {
     });
 
     it('password less than min required characters', async () => {
-        const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH - 1);
+        const password = 'a'.repeat(constants.USER.MIN_PASSWORD_LENGTH - 1);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -119,7 +119,7 @@ describe('reg.test', () => {
     });
 
     it('password more than max required characters', async () => {
-        const password = 'a'.repeat(constants.MAX_PASSWORD_LENGTH);
+        const password = 'a'.repeat(constants.USER.MAX_PASSWORD_LENGTH);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -135,7 +135,7 @@ describe('reg.test', () => {
     });
 
     it('password includes only uppercase letters', async () => {
-        const password = "A".repeat(constants.MIN_PASSWORD_LENGTH);
+        const password = "A".repeat(constants.USER.MIN_PASSWORD_LENGTH);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -151,7 +151,7 @@ describe('reg.test', () => {
     });
 
     it('password includes only lowercase letters', async () => {
-       const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH);
+       const password = 'a'.repeat(constants.USER.MIN_PASSWORD_LENGTH);
        const response = await request(app)
            .post('/api/register')
            .send({
@@ -167,7 +167,7 @@ describe('reg.test', () => {
     });
 
     it('password includes only digits', async () => {
-       const password = '2'.repeat(constants.MIN_PASSWORD_LENGTH);
+       const password = '2'.repeat(constants.USER.MIN_PASSWORD_LENGTH);
        const response = await request(app)
            .post('/api/register')
            .send({
@@ -183,7 +183,8 @@ describe('reg.test', () => {
     });
 
     it('password includes only uppercase and lowercase letters', async () => {
-       const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + 'A'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
+       const password = 'a'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2) +
+           'A'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2);
        const response = await request(app)
            .post('/api/register')
            .send({
@@ -199,7 +200,8 @@ describe('reg.test', () => {
     });
 
     it('password includes only lowercase letters and digits', async () => {
-       const password = 'a'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + '2'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
+       const password = 'a'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2) +
+           '2'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2);
        const response = await request(app)
            .post('/api/register')
            .send({
@@ -215,7 +217,8 @@ describe('reg.test', () => {
     });
 
     it('password includes only uppercase letters and digits', async () => {
-        const password = 'A'.repeat(constants.MIN_PASSWORD_LENGTH / 2) + '2'.repeat(constants.MIN_PASSWORD_LENGTH / 2);
+        const password = 'A'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2) +
+            '2'.repeat(constants.USER.MIN_PASSWORD_LENGTH / 2);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -261,7 +264,7 @@ describe('reg.test', () => {
     });
 
     it('firstName less than min required symbols', async () => {
-       const firstName = 'a'.repeat(constants.MIN_NAME_LENGTH - 1);
+       const firstName = 'a'.repeat(constants.USER.MIN_NAME_LENGTH - 1);
        const response = await request(app)
            .post('/api/register')
            .send({
@@ -277,7 +280,7 @@ describe('reg.test', () => {
     });
 
     it('firstName more than max required symbols', async () => {
-        const firstName = 'a'.repeat(constants.MAX_NAME_LENGTH + 1);
+        const firstName = 'a'.repeat(constants.USER.MAX_NAME_LENGTH + 1);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -338,7 +341,7 @@ describe('reg.test', () => {
     });
 
     it('lastName less than min required symbols', async () => {
-        const lastName = 'a'.repeat(constants.MIN_NAME_LENGTH - 1);
+        const lastName = 'a'.repeat(constants.USER.MIN_NAME_LENGTH - 1);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -354,7 +357,7 @@ describe('reg.test', () => {
     });
 
     it('lastName more than max required symbols', async () => {
-        const lastName = 'a'.repeat(constants.MAX_NAME_LENGTH + 1);
+        const lastName = 'a'.repeat(constants.USER.MAX_NAME_LENGTH + 1);
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -400,7 +403,7 @@ describe('reg.test', () => {
     });
 
     it('age less than min required', async () => {
-        const age = constants.MIN_USER_AGE_VALUE - 1;
+        const age = constants.USER.MIN_AGE_VALUE - 1;
         const response = await request(app)
             .post('/api/register')
             .send({
@@ -416,7 +419,7 @@ describe('reg.test', () => {
     });
 
     it('age more than max required', async () => {
-        const age = constants.MAX_USER_AGE_VALUE + 1;
+        const age = constants.USER.MAX_AGE_VALUE + 1;
         const response = await request(app)
             .post('/api/register')
             .send({

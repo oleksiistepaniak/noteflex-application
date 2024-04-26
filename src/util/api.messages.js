@@ -25,6 +25,9 @@ const apiMessages = {
         TASK_NOT_FOUND: 'task_not_found',
         TASK_ID_NOT_NUMBER: 'task_id_not_number',
     },
+    NOTE: {
+        TITLE_NOT_STRING: 'title_not_string',
+    }
 };
 
 module.exports = {

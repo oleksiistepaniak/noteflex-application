@@ -100,7 +100,7 @@ describe('update.task.by.id.test', () => {
     });
 
     it('title length more than max required symbols', async () => {
-       const title = 'a'.repeat(constants.MAX_TITLE_LENGTH + 1);
+       const title = 'a'.repeat(constants.TASK.MAX_TITLE_LENGTH + 1);
        const response = await request(app)
            .put('/api/tasks/1')
            .set('Authorization', token)
@@ -144,7 +144,7 @@ describe('update.task.by.id.test', () => {
     });
 
     it('description less than min required symbols', async () => {
-       const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH - 1);
+       const description = 'a'.repeat(constants.TASK.MIN_DESCRIPTION_LENGTH - 1);
         const response = await request(app)
             .put('/api/tasks/1')
             .set('Authorization', token)
@@ -158,7 +158,7 @@ describe('update.task.by.id.test', () => {
     });
 
     it('description more than max required symbols', async () => {
-        const description = 'a'.repeat(constants.MAX_DESCRIPTION_LENGTH + 1);
+        const description = 'a'.repeat(constants.TASK.MAX_DESCRIPTION_LENGTH + 1);
         const response = await request(app)
             .put('/api/tasks/1')
             .set('Authorization', token)
@@ -186,7 +186,7 @@ describe('update.task.by.id.test', () => {
 
     it('success with only title', async () => {
         await t.setValidTasks();
-        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
+        const title = 'a'.repeat(constants.TASK.MAX_TITLE_LENGTH);
         const response = await request(app)
             .put('/api/tasks/1')
             .set('Authorization', token)
@@ -204,7 +204,7 @@ describe('update.task.by.id.test', () => {
 
     it('success with only description', async () => {
         await t.setValidTasks();
-       const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+       const description = 'a'.repeat(constants.TASK.MIN_DESCRIPTION_LENGTH);
        const response = await request(app)
            .put('/api/tasks/1')
            .set('Authorization', token)
@@ -240,8 +240,8 @@ describe('update.task.by.id.test', () => {
 
     it('success with title and description', async () => {
         await t.setValidTasks();
-        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
-        const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+        const title = 'a'.repeat(constants.TASK.MAX_TITLE_LENGTH);
+        const description = 'a'.repeat(constants.TASK.MIN_DESCRIPTION_LENGTH);
         const response = await request(app)
             .put('/api/tasks/1')
             .set('Authorization', token)
@@ -261,8 +261,8 @@ describe('update.task.by.id.test', () => {
 
     it('success with all fields', async () => {
         await t.setValidTasks();
-        const title = 'a'.repeat(constants.MAX_TITLE_LENGTH);
-        const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH);
+        const title = 'a'.repeat(constants.TASK.MAX_TITLE_LENGTH);
+        const description = 'a'.repeat(constants.TASK.MIN_DESCRIPTION_LENGTH);
         const isCompleted = true;
         const response = await request(app)
            .put('/api/tasks/1')

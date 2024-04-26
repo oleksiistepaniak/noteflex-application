@@ -87,7 +87,7 @@ describe('create.task.test', () => {
     });
 
     it('title length more than max required symbols', async () => {
-       const title = 'a'.repeat(constants.MAX_TITLE_LENGTH + 1);
+       const title = 'a'.repeat(constants.TASK.MAX_TITLE_LENGTH + 1);
         const response = await request(app)
             .post('/api/tasks')
             .set('Authorization', token)
@@ -136,7 +136,7 @@ describe('create.task.test', () => {
     });
 
     it('description length less than min required symbols', async () => {
-        const description = 'a'.repeat(constants.MIN_DESCRIPTION_LENGTH - 1);
+        const description = 'a'.repeat(constants.TASK.MIN_DESCRIPTION_LENGTH - 1);
         const response = await request(app)
             .post('/api/tasks')
             .set('Authorization', token)
@@ -153,7 +153,7 @@ describe('create.task.test', () => {
     });
 
     it('description length more than max required symbols', async () => {
-        const description = 'a'.repeat(constants.MAX_DESCRIPTION_LENGTH + 1);
+        const description = 'a'.repeat(constants.TASK.MAX_DESCRIPTION_LENGTH + 1);
         const response = await request(app)
             .post('/api/tasks')
             .set('Authorization', token)

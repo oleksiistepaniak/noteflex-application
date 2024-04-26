@@ -124,6 +124,7 @@ async function initDb() {
 }
 
 async function clearDb() {
+    await db.executeSqlScript('DROP TABLE notes;');
     await db.executeSqlScript('DROP TABLE tasks;');
     await db.executeSqlScript('DROP TABLE users;');
 }

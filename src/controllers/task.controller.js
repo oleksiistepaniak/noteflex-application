@@ -1,4 +1,5 @@
 const util = require("../util/api.util");
+const taskUtil = require('../util/task.util');
 const messages = require("../util/api.messages");
 const taskService = require('../services/task.service');
 const {apiMessages} = require("../util/api.messages");
@@ -18,9 +19,9 @@ exports.create = async (request, response) => {
     // VALIDATING REQUEST BODY REQUIRED FIELDS
     try {
         util.isString(title, apiMessages.TASK.TITLE_NOT_STRING);
-        util.isTitleValid(title);
+        taskUtil.isTitleValid(title);
         util.isString(description, apiMessages.TASK.DESCRIPTION_NOT_STRING);
-        util.isDescriptionValid(description);
+        taskUtil.isDescriptionValid(description);
     } catch (error) {
         response.status(400).send({
             message: error.message
@@ -155,9 +156,9 @@ exports.updateById = async (request, response) => {
     try {
         util.isNumber(id, apiMessages.TASK.TASK_ID_NOT_NUMBER);
         util.isOptionalString(title, apiMessages.TASK.TITLE_NOT_STRING);
-        util.isOptionalTitleValid(title);
+        taskUtil.isOptionalTitleValid(title);
         util.isOptionalString(description, apiMessages.TASK.DESCRIPTION_NOT_STRING);
-        util.isOptionalDescriptionValid(description);
+        taskUtil.isOptionalDescriptionValid(description);
     } catch (error) {
         response.status(400).send({
             message: error.message,

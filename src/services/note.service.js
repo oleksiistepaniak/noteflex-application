@@ -16,3 +16,7 @@ async function createNote(params) {
         note,
     });
 }
+
+module.exports = {
+    createNote,
+}

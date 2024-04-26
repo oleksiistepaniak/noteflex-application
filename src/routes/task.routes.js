@@ -1,7 +1,7 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 
 module.exports = app => {
-    const notes = require("../controllers/task.controller");
+    const tasks = require("../controllers/task.controller");
     const router = require("express").Router();
     router.use(authMiddleware);
 
@@ -46,13 +46,13 @@ module.exports = app => {
      *       '500':
      *         description: Internal server error
      */
-    router.post("/", notes.create);
-    router.get("/", notes.findAll);
-    router.get("/completed", notes.findAllCompleted);
-    router.get("/active", notes.findAllActive);
-    router.get("/:id", notes.findOneById);
-    router.put("/:id", notes.updateById);
-    router.delete("/:id", notes.removeById);
+    router.post("/", tasks.create);
+    router.get("/", tasks.findAll);
+    router.get("/completed", tasks.findAllCompleted);
+    router.get("/active", tasks.findAllActive);
+    router.get("/:id", tasks.findOneById);
+    router.put("/:id", tasks.updateById);
+    router.delete("/:id", tasks.removeById);
 
     app.use("/api/tasks", router);
 }

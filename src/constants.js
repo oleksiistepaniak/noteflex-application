@@ -15,6 +15,11 @@ const CONSTANTS = {
         MIN_DESCRIPTION_LENGTH: 5,
         MAX_DESCRIPTION_LENGTH: 255,
     },
+    NOTE: {
+        MIN_TITLE_LENGTH: 3,
+        MAX_TITLE_LENGTH: 20,
+        MIN_TEXT_LENGTH: 5,
+    }
 }
 
 module.exports = CONSTANTS;

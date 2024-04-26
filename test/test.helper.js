@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const bcrypt = require('bcryptjs');
 const request = require('supertest');
 
@@ -61,16 +61,17 @@ const validCredentialsForLogin = {
 };
 
 function init() {
-    require("dotenv").config({ path: './.test.env' });
-    const database = require("../src/db/database");
+    require('dotenv').config({ path: './.test.env' });
+    const database = require('../src/db/database');
     db = database;
     app = express();
     app.use(express.json());
 
     app.use(express.urlencoded({extended: true}))
 
-    require("../src/routes/task.routes")(app);
-    require("../src/routes/auth.routes")(app);
+    require('../src/routes/auth.routes')(app);
+    require('../src/routes/task.routes')(app);
+    require('../src/routes/note.routes')(app);
 
     server = app.listen(process.env.APP_PORT, async () => {
         // await database.initializeDatabase();

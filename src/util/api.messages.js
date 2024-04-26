@@ -27,6 +27,9 @@ const apiMessages = {
     },
     NOTE: {
         TITLE_NOT_STRING: 'title_not_string',
+        TEXT_NOT_STRING: 'text_not_string',
+        INVALID_TITLE_LENGTH: 'invalid_title_length',
+        INVALID_TEXT_LENGTH: 'invalid_text_length',
     }
 };
 

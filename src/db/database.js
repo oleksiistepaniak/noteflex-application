@@ -30,13 +30,13 @@ function executeSqlScript(sqlScript, array) {
 }
 
 
-const createDbSql = fs.readFileSync('./src/db/create_db.sql', 'utf8');
-const createTestDbSql = fs.readFileSync('./src/db/create_test_db.sql', 'utf8');
-const useDbSql = fs.readFileSync('./src/db/use_db.sql', 'utf8');
-const useTestDbSql = fs.readFileSync('./src/db/use_test_db.sql', 'utf8');
-const createUsersTableSql = fs.readFileSync('./src/db/create_users_table.sql', 'utf8');
-const createTasksTableSql = fs.readFileSync('./src/db/create_tasks_table.sql', 'utf8');
-const createNotesTableSql = fs.readFileSync('./src/db/create_notes_table.sql', 'utf8');
+const createDbSql = fs.readFileSync('./src/db/scripts/create_db.sql', 'utf8');
+const createTestDbSql = fs.readFileSync('./src/db/scripts/create_test_db.sql', 'utf8');
+const useDbSql = fs.readFileSync('./src/db/scripts/use_db.sql', 'utf8');
+const useTestDbSql = fs.readFileSync('./src/db/scripts/use_test_db.sql', 'utf8');
+const createUsersTableSql = fs.readFileSync('./src/db/scripts/create_users_table.sql', 'utf8');
+const createTasksTableSql = fs.readFileSync('./src/db/scripts/create_tasks_table.sql', 'utf8');
+const createNotesTableSql = fs.readFileSync('./src/db/scripts/create_notes_table.sql', 'utf8');
 
 async function initializeDatabase() {
     try {

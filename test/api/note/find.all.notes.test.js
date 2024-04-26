@@ -83,5 +83,5 @@ describe('find.all.notes.test', () => {
             }
         ]);
         should(response.status).deepEqual(200);
-    })
+    });
 });

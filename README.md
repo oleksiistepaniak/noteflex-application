@@ -79,4 +79,4 @@ SALT=YOUR_SALT
 
 If you have any questions, please contact me via email at **alexstepanyak@gmail.com**.
 
-Author: 
+**Author:** [**Oleksii Stepaniak**](https://github.com/oleksiistepaniak)

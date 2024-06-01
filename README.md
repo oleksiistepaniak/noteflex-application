@@ -43,3 +43,39 @@ this application. Mocha, Should, and Supertest were used for unit testing.
 | GET         | /api/tasks/{id}                                               | Used for retrieving a task by identifier                           | -                         | -                                                           | Authorization: VALID_TOKEN |
 | PUT         | /api/tasks/{id}                                               | Used for updating a task by identifier                             | +                         | title?: string; description?: string: isCompleted?: boolean | Authorization: VALID_TOKEN |
 | DELETE      | /api/tasks/{id}                                               | Used for removing a task by identifier                             | -                         | -                                                           | Authorization: VALID_TOKEN |
+
+# Technologies used:
+
+- JavaScript ES6
+- Express JS
+- MySQL
+- Swagger
+- BcryptJs
+- Mocha
+- Should
+- Supertest
+
+# How to run this project locally?
+
+- make sure you have Node.js, MySQL and NPM installed on your system;
+- clone this repository;
+- open this project (you can do this using WebStorm, VS Code or another development environment);
+- create two files named **.env** and **.test.env** in the root directory of the cloned repository on your computer and fill in these fields:
+```
+APP_PORT=YOUR_APP_PORT
+DB_PORT=YOUR_DB_PORT
+DB_HOST=YOUR_DB_HOST
+DB_USER=YOUR_DB_USER
+DB_PASSWORD=YOUR_DB_PASSWORD
+DB_NAME=YOUR_DB_NAME
+SECRET_KEY=YOUR_SECRET_KEY
+SALT=YOUR_SALT
+```
+- run tests with **npm run test**;
+- enjoy this application;
+
+# Additional information:
+
+If you have any questions, please contact me via email at **alexstepanyak@gmail.com**.
+
+Author: 

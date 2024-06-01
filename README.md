@@ -71,6 +71,7 @@ DB_NAME=YOUR_DB_NAME
 SECRET_KEY=YOUR_SECRET_KEY
 SALT=YOUR_SALT
 ```
+- install required dependencies **npm i** OR **npm install**;
 - run tests with **npm run test**;
 - enjoy this application;
 
